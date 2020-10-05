@@ -26,25 +26,28 @@ void bubble_sort(int *vet, int n){
     printf("Trocas: %d\n", trocas);
 }
 
-int insertionsort(int *vet, int n) { 
+int insertionsort(int *v, int n) { 
     int i, c, j, comparacoes = 0, trocas = 0; 
-    for (i = 1; i < n; i++) { 
-        c = vet[i]; 
-        j = i - 1;
-        while (j >= 0 && vet[j] > c) { 
-            vet[j + 1] = vet[j]; 
-            comparacoes+=1;
-            j = j - 1;
-            
+    for (int i = 0; i < n; i++){
+        int c = v[i];
+        int j = i - 1;
+
+        while(j >= 0 ){
+            comparacoes++;
+            if(v[j] > c){
+                v[j + 1] = v[j];
+                j--;
+                trocas++;
+            } else {
+                break;
+            }
         }
-        /*CONSERTAR*/
-        vet[j + 1] = c;
-        trocas+=1;
+        v[j + 1] = c;
     }
+    
     printf("Comparacoes: %d\n", comparacoes);
     printf("Trocas: %d\n", trocas);
 }
-
 void selectionsort(int *v, int n){
 	int menor, trocas=0, comp=0;
 
@@ -65,8 +68,8 @@ void selectionsort(int *v, int n){
 }
 printf("Comparacoes: %d\n", comp);
 printf("Trocas: %d\n", trocas);
-}
 
+}
 void geraVetorCrescente (int *vet , int n) {
     for (int i = 0; i < n; i++) {
         vet[i] = i+1;
@@ -140,15 +143,13 @@ void main(){
         selectionsort (vet, n);
     }
     
+    end = clock();
 
     printf("\nValore ordenados ");
     for(int q=0;q<n;q++){
         printf("%d ",vet[q]);
         }
     printf("\n");
-
-
-    end = clock();
 
     difTempo = ((double)end - start)/CLOCKS_PER_SEC;
     
