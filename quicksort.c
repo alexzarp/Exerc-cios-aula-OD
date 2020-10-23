@@ -2,31 +2,43 @@
 #include <stdlib.h>
 #include <string.h>
 
+void swap(int x, int y){ 
+   int temp;
+   temp = x;
+   x = y;
+   y = temp;
+}
+
 int particiona (int *vet, int inicio, int fim) {
-    int aux;
+    int pivo = fim;
     int cont = inicio;
-    for (int i = inicio+1; i<= fim; i++){
-        if(vet[i]<vet[inicio]) {
+    for (int i = inicio; i < fim; i++){
+        if(vet[i] <= vet[pivo]) {
             cont++;
-            aux = vet[i];
-            vet[i] = vet [inicio];
-            vet[inicio] = aux;  
+            /*pivo = vet[i];
+            vet[i] = vet[inicio];
+            vet[inicio] = pivo;*/
+            swap(vet[cont], vet[i]);
         }
     }
-    aux = vet[inicio];
-    vet[inicio] = vet [cont];
-    vet[cont] = aux;
-    cont++;
 
-    return cont;
+    if (vet[cont] > vet[pivo]){
+        /*pivo = vet[inicio];
+        vet[inicio] = vet[cont];
+        vet[cont] = pivo;*/
+        cont++;
+        swap(vet[cont], vet[pivo]);
+    }
+    
+    return pivo;
 }
 
 void quicksort (int *vet, int inicio, int fim) {
-    int vet_aux;
+    int pivo;
     if (inicio < fim) {
-        vet_aux = particiona (vet, inicio, fim);
-        quicksort(vet, inicio, vet_aux-1);
-        quicksort(vet, vet_aux+1, fim);
+        pivo = particiona (vet, inicio, fim);
+        quicksort(vet, inicio, pivo-1);
+        quicksort(vet, pivo+1, fim);
     }
 }
 
