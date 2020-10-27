@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include <mergesort.h>
-#include <quicksort.h>
+#include mergesort
+#include quicksort
 //#include <heapsort.h>
 
 void geraVetorCrescente (int *vet , int n) {
@@ -25,6 +25,18 @@ void geraVetorAleatorio (int *vet, int n, int num) {
         vet[i] = rand() % num;
         
     }
+}
+
+void escolheTipoVet (int tipovet, int *vet, int n, int num) {
+    if (tipovet == 1) {
+            geraVetorCrescente(vet, n);
+        }
+        else if (tipovet == 2) {
+            geraVetorDecrescente(vet, n);
+        }
+        else if (tipovet == 3){
+            geraVetorAleatorio(vet, n, num);
+        }
 }
 
 void main(){
@@ -51,26 +63,26 @@ void main(){
     if (metodo == 1) {
         
         start = clock();
-        bubble_sort(vet, n);  
+        mergesort(vet, n);  
     }
     else if (metodo == 2) {
     
         start = clock();
-        insertionsort(vet, n);
+        quicksort(vet, n);
     }
     else if (metodo == 3) {
         
         start = clock();
-        selectionsort (vet, n);
+        //mergesort (vet, n);
     }
     
     end = clock();
 
     printf("\nValore ordenados ");
-   /* for(int q=0;q<n;q++){
+    for(int q=0;q<n;q++){
         printf("%d ",vet[q]);
         }
-    printf("\n");*/
+    printf("\n");
 
     difTempo = ((double)end - start)/CLOCKS_PER_SEC;
     
