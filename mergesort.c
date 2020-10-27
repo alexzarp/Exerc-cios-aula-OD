@@ -6,6 +6,9 @@
 void mergesort (int *vet, int inicio, int fim);
 void intercala (int *vet, int inicio, int meio, int fim);
 
+
+//Quando for usar esse código para testes, descomente o main.
+//caso contrário comente ele.
 /*void main(){
     int vet[8] = {-5,1,9,50,-6,100,7,50};
     int n=8;

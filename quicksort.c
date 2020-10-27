@@ -46,7 +46,8 @@ void quicksort (int *vet, int inicio, int fim) {
     }
 }
 
-
+//Quando for usar esse código para testes, descomente o main.
+//caso contrário comente ele.
 /*void main(){
     int vet[5] = {3,27,6,4,5};
     int n=5;
