@@ -4,7 +4,28 @@
 #include <time.h>
 #include <mergesort.h>
 #include <quicksort.h>
-//#include <>
+//#include <heapsort.h>
+
+void geraVetorCrescente (int *vet , int n) {
+    for (int i = 0; i < n; i++) {
+        vet[i] = i+1;
+    }
+}
+void geraVetorDecrescente (int *vet , int n) {
+    int j = n;
+    for (int i = 0; i < n; i++) {
+        vet[i] = j;
+        j--;
+    }
+}
+
+void geraVetorAleatorio (int *vet, int n, int num) {
+    int i;
+    for (i = 0; i < n; i++){
+        vet[i] = rand() % num;
+        
+    }
+}
 
 void main(){
     int n;
@@ -14,7 +35,7 @@ void main(){
     int metodo;
     int tipovet;
 
-    printf("Qual método de ordenção usar?\n1 - BubbleSort\n2 - InsertionSort\n3 - SelectionSort\n");
+    printf("Qual método de ordenção usar?\n1 - Mergesort\n2 - Quicksort\n3 - Heapsort\n");
     scanf("%d", &metodo);
     printf("\n");
     printf("Ok, agora escolha o tamanho do vetor a ser usado?\n");
