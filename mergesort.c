@@ -40,7 +40,7 @@ void intercala (int *vet, int inicio, int meio, int fim) {
     int j = meio + 1;
     int p1 = 0, p2 = 0;
     int *k;
-    k = (int ) malloc(auxsizeof(int));
+    k = (int *) malloc(aux* sizeof(aux));
 
     if(k != NULL){
         for(int x = 0; x<aux; x++){
