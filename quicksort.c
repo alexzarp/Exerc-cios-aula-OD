@@ -2,6 +2,10 @@
 #include <stdlib.h>
 #include <string.h>
 
+void swap(int x, int y);
+int particiona (int *vet, int inicio, int fim);
+void quicksort (int *vet, int inicio, int fim);
+
 void swap(int x, int y){ 
    int temp;
    temp = x;
@@ -43,7 +47,7 @@ void quicksort (int *vet, int inicio, int fim) {
 }
 
 
-void main(){
+/*void main(){
     int vet[5] = {3,27,6,4,5};
     int n=5;
 
@@ -60,4 +64,4 @@ void main(){
         printf("%d ",vet[q]);
         }
     printf("\n");
-}
+}*/

@@ -6,8 +6,7 @@
 void mergesort (int *vet, int inicio, int fim);
 void intercala (int *vet, int inicio, int meio, int fim);
 
-
-void main(){
+/*void main(){
     int vet[8] = {-5,1,9,50,-6,100,7,50};
     int n=8;
 
@@ -24,7 +23,7 @@ void main(){
         printf("%d ",vet[q]);
         }
     printf("\n");
-}
+}*/
 
 void mergesort (int *vet, int inicio, int fim) {
     if (inicio < fim) {
@@ -66,9 +65,9 @@ void intercala (int *vet, int inicio, int meio, int fim) {
     
         }
 
-for (j = 0, a=inicio; j<aux;j++, a++) {
+    for (j = 0, a=inicio; j<aux;j++, a++) {
         vet[a] = k[j];
-}
-}
-free(k);
+        }
+    }
+    free(k);
 }

@@ -2,9 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include mergesort
-#include quicksort
-//#include <heapsort.h>
+#include "mergesort.c"
+#include "quicksort.c"
+//#include "heapsort.c"
 
 void geraVetorCrescente (int *vet , int n) {
     for (int i = 0; i < n; i++) {
@@ -61,19 +61,16 @@ void main(){
     escolheTipoVet (tipovet, vet, n, num);
 
     if (metodo == 1) {
-        
         start = clock();
-        mergesort(vet, n);  
+        mergesort(vet, 0, n);  
     }
     else if (metodo == 2) {
-    
         start = clock();
-        quicksort(vet, n);
+        quicksort(vet, 0, n);
     }
     else if (metodo == 3) {
-        
         start = clock();
-        //mergesort (vet, n);
+        //heapsort (vet, n);
     }
     
     end = clock();
