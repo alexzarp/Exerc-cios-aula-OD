@@ -75,11 +75,11 @@ void main(){
     
     end = clock();
 
-    printf("\nValore ordenados ");
+    /*printf("\nValore ordenados ");
     for(int q=0;q<n;q++){
         printf("%d ",vet[q]);
         }
-    printf("\n");
+    printf("\n");*/
 
     difTempo = ((double)end - start)/CLOCKS_PER_SEC;
     
