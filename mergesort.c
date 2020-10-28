@@ -2,14 +2,14 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#include "swap.c"
 
 void mergesort (int *vet, int inicio, int fim);
 void intercala (int *vet, int inicio, int meio, int fim);
 
-
 //Quando for usar esse código para testes, descomente o main.
 //caso contrário comente ele.
-void main(){
+/*void main(){
     int vet[8] = {-5,1,9,40,-6,29,7,32};
     int n=8;
 
@@ -26,7 +26,7 @@ void main(){
         printf("%d ",vet[q]);
         }
     printf("\n");
-}
+}*/
 //---------------------------------------------------
 
 void mergesort (int *vet, int inicio, int fim) {

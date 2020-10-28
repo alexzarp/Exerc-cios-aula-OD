@@ -4,13 +4,14 @@
 #include <time.h>
 #include "mergesort.c"
 #include "quicksort.c"
-//#include "heapsort.c"
+#include "heapsort.c"
 
 void geraVetorCrescente (int *vet , int n) {
     for (int i = 0; i < n; i++) {
         vet[i] = i+1;
     }
 }
+
 void geraVetorDecrescente (int *vet , int n) {
     int j = n;
     for (int i = 0; i < n; i++) {
@@ -70,7 +71,7 @@ void main(){
     }
     else if (metodo == 3) {
         start = clock();
-        //heapsort (vet, n);
+        heapsort (vet, n);
     }
     
     end = clock();
