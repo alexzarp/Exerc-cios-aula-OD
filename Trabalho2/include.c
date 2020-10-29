@@ -1,9 +1,0 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
-#include <math.h>
-#include "mergesort.c"
-#include "quicksort.c"
-#include "heapsort.c"
-#include "geravet.c"
