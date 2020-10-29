@@ -3,6 +3,7 @@
 #include <string.h>
 #include <time.h>
 #include <math.h>
+//Não sei porque só funciona se declarar swap aqui
 #include "swap.c"
 
 int particiona (int *vet, int inicio, int fim) {
@@ -33,7 +34,7 @@ void quicksort (int *vet, int inicio, int fim) {
 
 //Quando for usar esse código para testes, descomente o main.
 //caso contrário comente ele.
-void main(){
+/*void main(){
     int vet[5] = {3,27,6,4,5};
     int n=5;
 
@@ -50,4 +51,4 @@ void main(){
         printf("%d ",vet[q]);
         }
     printf("\n");
-}
+}*/
