@@ -31,3 +31,15 @@ void escolheTipoVet (int tipovet, int *vet, int n, int num) {
             geraVetorAleatorio(vet, n, num);
         }
 }
+
+void sort (int metodo, int *vet, int n) {
+    if (metodo == 1) {        
+        mergesort(vet, 0, n);  
+    }
+    else if (metodo == 2) {
+        quicksort(vet, 0, n);
+    }
+    else if (metodo == 3) {
+        heapsort (vet, n);
+    }
+}

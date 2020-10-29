@@ -1,10 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-int particiona (int *vet, int inicio, int fim);
-void quicksort (int *vet, int inicio, int fim);
-
+#include "swap.c"
 
 int particiona (int *vet, int inicio, int fim) {
     int pivo = fim;

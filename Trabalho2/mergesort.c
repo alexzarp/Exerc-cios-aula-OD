@@ -1,7 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <math.h>
 //FINALIZADO
 void intercala (int *vet, int inicio, int meio, int fim) {
     int tam = fim - inicio + 1;
@@ -49,25 +45,3 @@ void mergesort (int *vet, int inicio, int fim) {
         intercala(vet, inicio, meio, fim);
     }
 }
-
-//Quando for usar esse código para testes, descomente o main.
-//Caso contrário comente ele.
-/*void main(){
-    int vet[6] = {50,55,88,150,-7,-65};
-    int n=6;
-
-    printf("Valore desordenados ");
-    for(int q=0;q<n;q++){
-        printf("%d ",vet[q]);
-        }
-    printf("\n");
-
-    mergesort(vet, 0, n-1);
-
-    printf("Valores ordenados ");
-    for(int q=0; q < n; q++){
-        printf("%d ",vet[q]);
-        }
-    printf("\n");
-}*/
-

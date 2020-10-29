@@ -2,11 +2,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <math.h>
 #include "mergesort.c"
 #include "quicksort.c"
 #include "heapsort.c"
 #include "geravet.c"
-#include "swap.c"
 
 void main(){
     int n;
@@ -29,26 +29,23 @@ void main(){
     printf("\n");
     escolheTipoVet (tipovet, vet, n, num);
 
-    if (metodo == 1) {
-        start = clock();
-        mergesort(vet, 0, n);  
-    }
-    else if (metodo == 2) {
-        start = clock();
-        quicksort(vet, 0, n);
-    }
-    else if (metodo == 3) {
-        start = clock();
-        heapsort (vet, n);
-    }
-    
-    end = clock();
-
-    /*printf("\nValore ordenados ");
+    printf("\nValore desordenados ");
     for(int q=0;q<n;q++){
         printf("%d ",vet[q]);
         }
-    printf("\n");*/
+    printf("\n");
+
+    start = clock();
+
+    sort (metodo, vet, n);
+    
+    end = clock();
+
+    printf("\nValore ordenados    ");
+    for(int q=0;q<n;q++){
+        printf("%d ",vet[q]);
+        }
+    printf("\n");
 
     difTempo = ((double)end - start)/CLOCKS_PER_SEC;
     
