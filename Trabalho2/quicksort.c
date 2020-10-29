@@ -6,18 +6,11 @@ int particiona (int *vet, int inicio, int fim) {
     for (int i = inicio; i < fim; i++){
         if(vet[i] <= vet[pivo]) {
             cont++;
-            /*pivo = vet[i];
-            vet[i] = vet[inicio];
-            vet[inicio] = pivo;*/
             swap(&vet[cont], &vet[i]);
         }
     }
 
     if (vet[cont] > vet[pivo]){
-        /*pivo = vet[inicio];
-        vet[inicio] = vet[cont];
-        vet[cont] = pivo;
-        cont++;*/
         swap(&vet[cont], &vet[pivo]);
     }
     

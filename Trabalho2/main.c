@@ -29,20 +29,18 @@ void main(){
     printf("\n");
     escolheTipoVet (tipovet, vet, n, num);
 
+    print(vet, n, 0);
+    
     start = clock();
-
+    
     sort (metodo, vet, n);
     
     end = clock();
 
-    printf("\nValore ordenados ");
-    for(int q=0;q<n;q++){
-        printf("%d ",vet[q]);
-        }
-    printf("\n");
+    print(vet, n, 1);
 
     difTempo = ((double)end - start)/CLOCKS_PER_SEC;
     
     printf("\nTempo(s): %lf\n",difTempo);
-    printf("Tempo(ms) %lf\n",difTempo*1000);
+    printf("Tempo(ms): %lf\n",difTempo*1000);
 }

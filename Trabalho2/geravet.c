@@ -43,3 +43,18 @@ void sort (int metodo, int *vet, int n) {
         heapsort (vet, n);
     }
 }
+
+void print (int *vet, int n, int mod) {
+    if (mod == 0) {
+        printf("\nValore desordenados ");
+        for(int q=0;q<n;q++){
+            printf("%d ",vet[q]);
+        }
+    } else {
+        printf("\nValore ordenados ");
+        for(int q=0;q<n;q++){
+            printf("%d ",vet[q]);
+        }
+        printf("\n");
+    }
+ }
