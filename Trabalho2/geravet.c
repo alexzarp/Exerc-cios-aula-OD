@@ -34,7 +34,7 @@ void escolheTipoVet (int tipovet, int *vet, int n, int num) {
 
 void sort (int metodo, int *vet, int n) {
     if (metodo == 1) {        
-        mergesort(vet, 0, n);  
+        mergesort(vet, 0, n-1);  
     }
     else if (metodo == 2) {
         quicksort(vet, 0, n);
