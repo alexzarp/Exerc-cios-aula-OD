@@ -33,6 +33,7 @@ void intercala (int *vet, int inicio, int meio, int fim) {
        
     for (k = inicio; k<=fim; k++) {
         vet[k] = aux[k-inicio];
+
     }  
     free(aux);
 }

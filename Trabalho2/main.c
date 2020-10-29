@@ -10,7 +10,7 @@
 
 void main(){
     int n;
-    int num = 1000000;
+    int num = 1000;
     clock_t start,end;
     double difTempo;
     int metodo;
@@ -29,19 +29,13 @@ void main(){
     printf("\n");
     escolheTipoVet (tipovet, vet, n, num);
 
-    printf("\nValore desordenados ");
-    for(int q=0;q<n;q++){
-        printf("%d ",vet[q]);
-        }
-    printf("\n");
-
     start = clock();
 
     sort (metodo, vet, n);
     
     end = clock();
 
-    printf("\nValore ordenados    ");
+    printf("\nValore ordenados ");
     for(int q=0;q<n;q++){
         printf("%d ",vet[q]);
         }
