@@ -1,3 +1,8 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+#include <math.h>
 #include "swap.c"
 
 int particiona (int *vet, int inicio, int fim) {
@@ -28,7 +33,7 @@ void quicksort (int *vet, int inicio, int fim) {
 
 //Quando for usar esse código para testes, descomente o main.
 //caso contrário comente ele.
-/*void main(){
+void main(){
     int vet[5] = {3,27,6,4,5};
     int n=5;
 
@@ -45,4 +50,4 @@ void quicksort (int *vet, int inicio, int fim) {
         printf("%d ",vet[q]);
         }
     printf("\n");
-}*/
+}
