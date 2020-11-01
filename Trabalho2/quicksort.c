@@ -1,26 +1,30 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
-#include <math.h>
 //Não sei porque só funciona se declarar swap aqui
 #include "swap.c"
 
 int particiona (int *vet, int inicio, int fim) {
-    int pivo = fim;
-    int cont = inicio;
-    for (int i = inicio; i < fim; i++){
-        if(vet[i] <= vet[pivo]) {
-            cont++;
-            swap(&vet[cont], &vet[i]);
+    int pivo = vet[inicio];
+    int aux, esq, dir;
+    esq = inicio;
+    dir = fim;
+    while(esq<dir){
+        while(vet[esq]<=pivo){
+            esq++;
         }
+        while (vet[dir] > pivo){
+            dir--;
+        }
+        if(esq < dir){
+            aux = vet[esq];
+            vet[esq] = vet[dir];
+            vet[dir] = aux;
+            //swap (&vet[esq], &vet[dir]);
+        }
+        
+        
     }
-
-    if (vet[cont] > vet[pivo]){
-        swap(&vet[cont], &vet[pivo]);
-    }
-    
-    return pivo;
+    vet[inicio] = vet[dir];
+    vet[dir] = pivo;
+    return dir;
 }
 
 void quicksort (int *vet, int inicio, int fim) {
@@ -31,24 +35,3 @@ void quicksort (int *vet, int inicio, int fim) {
         quicksort(vet, pivo+1, fim);
     }
 }
-
-//Quando for usar esse código para testes, descomente o main.
-//caso contrário comente ele.
-/*void main(){
-    int vet[5] = {3,27,6,4,5};
-    int n=5;
-
-    printf("Valore desordenados ");
-    for(int q=0;q<n;q++){
-        printf("%d ",vet[q]);
-        }
-    printf("\n");
-
-    quicksort(vet, 0, n);
-
-    printf("Valore ordenados ");
-    for(int q=0;q<n;q++){
-        printf("%d ",vet[q]);
-        }
-    printf("\n");
-}*/

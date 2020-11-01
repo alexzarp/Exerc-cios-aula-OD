@@ -28,7 +28,7 @@ void main(){
     printf("\n");
     escolheTipoVet (tipovet, vet, n, num);
 
-    print(vet, n, 0);
+    //print(vet, n, 0);
 
     start = clock();
     
