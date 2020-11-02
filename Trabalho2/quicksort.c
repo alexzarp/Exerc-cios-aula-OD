@@ -1,3 +1,4 @@
+//FINALIZADO
 int particiona (int *vet, int inicio, int fim) {
     int pivo = vet[inicio];
     int aux, esq, dir;
