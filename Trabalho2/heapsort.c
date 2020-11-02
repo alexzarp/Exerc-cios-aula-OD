@@ -1,4 +1,5 @@
 //FINALIZADO
+# include "swap.c"
 void criaheap (int *vet, int n, int i) {
     int aux;
     int maior = i;

@@ -37,7 +37,7 @@ void sort (int metodo, int *vet, int n) {
         mergesort(vet, 0, n-1);  
     }
     else if (metodo == 2) {
-        quicksort(vet, 0, n);
+        quicksort(vet, 0, n-1);
     }
     else if (metodo == 3) {
         heapsort (vet, n);
