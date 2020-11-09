@@ -1,8 +1,19 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "getMax.c"
 
-void countSort(vet, i, n) {
-    
+void countSort(int *vet, int i, int n) {
+    int *aux;
+    aux = (int *) malloc(vet sizeof(int));
+
+    int cont[10];
+    int posicao[10];
+    for (int zera = 0; zera<10; zera++) {
+        cont[zera] = 0;
+        posicao[zera] = 0;
+    }
+
+
 }
 
 void radixsort (int *vet, int n) {
@@ -12,7 +23,6 @@ void radixsort (int *vet, int n) {
         countSort(vet, i, n);
     }
 }
-
 
 void main() {
     
