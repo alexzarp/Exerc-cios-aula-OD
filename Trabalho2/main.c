@@ -36,7 +36,7 @@ void main(){
     
     end = clock();
 
-    print(vet, n, 1);
+    //print(vet, n, 1);
 
     difTempo = ((double)end - start)/CLOCKS_PER_SEC;
     
