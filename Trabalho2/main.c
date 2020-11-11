@@ -9,7 +9,7 @@
 
 void main(){
     int n;
-    int num = 1000;
+    int num = 10000;
     clock_t start,end;
     double difTempo;
     int metodo;
