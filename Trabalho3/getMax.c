@@ -1,10 +1,7 @@
-int getMax (int *vet, int n) {
-    int max = 0;
-    for (int i = 0; i < n; i++) {
-        if (vet[i] > max) {
-            max = vet[i];
-        }
-    }
-
-    return max;
-}
+int getMax(int *vet, int n) { 
+    int aux = vet[0]; 
+    for (int i = 1; i < n; i++) 
+        if (vet[i] > aux) 
+            aux = vet[i]; 
+    return aux; 
+} 
