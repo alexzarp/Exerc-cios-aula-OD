@@ -15,7 +15,6 @@ void main () {
     printf("\n");
     int vet[n];
     printf("Escolha agora o tipo de vetor.\n1 - Crescente\n2 - Decrescente\n3 - Aleatorio");
-    printf("\n");
     scanf("%d", &tipovet);
     printf("\n");
     escolheTipoVet (tipovet, vet, n, num);
