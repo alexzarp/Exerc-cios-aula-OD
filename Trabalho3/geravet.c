@@ -1,4 +1,3 @@
-#include <math.h>
 void geraVetorCrescente (int *vet , int n) {
     for (int i = 0; i < n; i++) {
         vet[i] = i+1;

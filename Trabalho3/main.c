@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
 #include "radixsort.c"
@@ -14,7 +15,7 @@ void main () {
     scanf("%d", &n);
     printf("\n");
     int vet[n];
-    printf("Escolha agora o tipo de vetor.\n1 - Crescente\n2 - Decrescente\n3 - Aleatorio");
+    printf("Escolha agora o tipo de vetor.\n1 - Crescente\n2 - Decrescente\n3 - Aleatorio\n");
     scanf("%d", &tipovet);
     printf("\n");
     escolheTipoVet (tipovet, vet, n, num);
