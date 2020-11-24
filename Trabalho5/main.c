@@ -9,7 +9,7 @@
 	- Não serão toleradas variaveis globais
 	- Caso seja detectado plágio, os grupos envolvidos receberão nota 0.
 */
-#include <funcionamento.h>
+#include "funcionamento.h"
 
 #define EXIT 10  // valor fixo para a opção que finaliza a aplicação
 
@@ -27,6 +27,7 @@ struct MREC {
        Date birth;
        char email[40];
        char phone[15];
+
 	   struct MREC *next;
 	   struct MREC *prev;
 };
@@ -34,8 +35,7 @@ struct MREC {
 typedef struct MREC Contact;
 
 // Apresenta o menu da aplicação e retorna a opção selecionada
-int menu()
-{
+int menu() {
     int op=0;
     while (op!=EXIT)
     {
@@ -71,11 +71,18 @@ void upContact ()
      return;
 }
 
+
 // Programa principal
 int main() {
     int op=0;
 
-    CriaObjetoAgenda();
+    Contact *MContact = (Contact *) malloc(sizeof(Contact *));
+    MContact->name = NULL;
+    MContact->birth = NULL;
+    MContact->email = NULL;
+    MContact->phone = NULL;
+    MContact->prev = NULL;
+    MContact->next = NULL;
 
     /*FILE *file;
     file = fopen("agenda.uf","rb");//abrindo o arquivo somente para leitura 
