@@ -34,6 +34,11 @@ struct MREC {
 // Tipo criado para instanciar variaveis do tipo agenda
 typedef struct MREC Contact;
 
+typedef struct {
+    Contact *head;
+    Contact *tail;
+} Lista;
+
 // Apresenta o menu da aplicação e retorna a opção selecionada
 int menu() {
     int op=0;
@@ -76,14 +81,12 @@ void upContact ()
 int main() {
     int op=0;
 
-    Contact *MContact = (Contact *) malloc(sizeof(Contact *));
-    MContact->name = NULL;
-    MContact->birth = NULL;
-    MContact->email = NULL;
-    MContact->phone = NULL;
-    MContact->prev = NULL;
-    MContact->next = NULL;
+    Lista *novoContato = (Contact* ) malloc(sizeof (Contact));
+    novoContato->head = NULL;
+    novoContato->tail = NULL;
 
+    
+    
     /*FILE *file;
     file = fopen("agenda.uf","rb");//abrindo o arquivo somente para leitura 
     
@@ -97,8 +100,6 @@ int main() {
 
     }*/
 
-    
-    
     while (op!=EXIT)
     {
           op=menu();

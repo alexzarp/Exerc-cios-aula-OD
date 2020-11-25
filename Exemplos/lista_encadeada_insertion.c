@@ -11,8 +11,8 @@
 struct ItemLista {
     int valor;
     
-   struct ItemLista *next; //proximo elemento
-   struct ItemLista *prev; // elemento anterior
+    struct ItemLista *next; //proximo elemento
+    struct ItemLista *prev; // elemento anterior
 };
 typedef struct ItemLista ItemLista;
 
@@ -45,7 +45,7 @@ void adicionaElemento(Lista *lista, ItemLista *itemAnterior, ItemLista *elemento
         elemento->prev = itemAnterior;
         elemento->next = NULL;
         lista->tail = elemento; //atualiza o ultimo elemento da lista
-    } else{ //qualquer elemento menos o último
+    } else { //qualquer elemento menos o último
         itemAnterior->next = elemento;
         elemento->prev = itemAnterior;
         elemento->next = itemProximo;
