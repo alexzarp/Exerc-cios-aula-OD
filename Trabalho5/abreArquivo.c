@@ -1,18 +1,13 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-void abreArquivo(){
+FILE* ArquivoParaLeitura(){
+    FILE* arquivo = fopen("arquivo.tr","rb");
 
-    FILE *file;
-    file  = fopen("agenda.txt","w+");
-    
-    if (file == NUll){
-        printf("Não está abrindo \n")
-        return 1;
+    if (arquivo == NULL){
+        return "Arquivo vazio";
+    }else{
+        return arquivo;
     }
-
-
-
-    fclose(file);
 
 }
