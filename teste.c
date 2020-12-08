@@ -23,7 +23,7 @@ typedef struct MREC Contact;
 
 // Permite o cadastro de um contato
 void insContact (Contact *raiz, char *nome, char *email, char *telefone, int dia, int mes, int ano) {
-    printf("entrou");
+    
     Contact *novoContato = (Contact* ) malloc(sizeof (Contact));
     snprintf(novoContato->name, sizeof(novoContato->name), "%s", nome);
     novoContato->birth.day = dia;
@@ -32,26 +32,76 @@ void insContact (Contact *raiz, char *nome, char *email, char *telefone, int dia
     snprintf(novoContato->email, sizeof(novoContato->email), "%s", email);
     snprintf(novoContato->phone, sizeof(novoContato->phone), "%s", telefone);
 
-    Contact *nav = raiz->next;
-
-    int posicao = strcmp(novoContato->name, nav->name);
+    Contact *contato = raiz;
+    Contact *aux;
+   
 // Isso se chama insetion sort
-    do {
-        if (strcmp(novoContato->name, nav->name) == -1) {  
+    // Isso se chama insetion sort
+    do{
+
+        //printf("%s %s", novoContato->name, nav->name);
+        if (strcmp(contato->name, novoContato->name) < 0) {
+            novoContato->next = contato->next;
+            contato->next = novoContato;
+            printf("\nEntrou no primeiro if\n");
+            //printf("%s %s", novoContato->name, nav->name);
+
             break;
+        }
+        else if (strcmp(contato->name, novoContato->name) > 0){
+            aux = novoContato;
+            novoContato->next = contato->next;
+            contato->next = aux;
         }
 
-        else if (strcmp(novoContato->name, nav->name) == 0){
+        else if (strcmp(contato->name, novoContato->name) == 0){
+            printf("\nEntrou no segundo if\n");
+            //printf("%s %s", novoContato->name, nav->name);
             break;
         }
-        
+        printf("\nFoi ao proximo\n");
+        contato = contato->next;
+
+    }while (contato->next != NULL);
+    
+    printf("\nInseriu contato\n");
+    //novoContato->next = nav->next;
+    //nav->next = novoContato;
+}
+
+// Permite excluir um contato da agenda
+void delContact (Contact *raiz) {
+    int digito, contador = 0;
+    
+    Contact *aux = raiz->next;
+    Contact *nav = raiz->next;
+    Contact *anterior = raiz;
+
+    while (aux->next) {
+        contador++;
+        printf("%d - %s\n", contador, aux->name);
+        aux = aux->next;
+    }
+    free(aux);
+    printf("Por favor digite o número correspondente a pessoa\nque você deseja excluir: ");
+    scanf("%d", &digito);
+    contador = 0;
+
+    while (nav->next) {   
+        contador++;
+        anterior = nav;
         nav = nav->next;
 
-    } while (nav != NULL);
+        if (contador == digito) {
+            break;
+        }
+    }
 
-    novoContato->next = nav->next;
-    nav->next = novoContato;
-} 
+    anterior->next = nav->next;
+    nav->next = NULL;
+    free(nav);
+}
+
 void displayLL(Contact *p)
 {
     p = p->next;
@@ -84,12 +134,12 @@ int main(int argc, char const *argv[])
 
 
     Contact *raiz = (Contact* ) malloc(sizeof (Contact));
-    snprintf(raiz->name, sizeof(raiz->name), "%s", nome);
+    /*snprintf(raiz->name, sizeof(raiz->name), "%s", nome);
     raiz->birth.day = 0;
     raiz->birth.month = 0;
     raiz->birth.year = 0;
     snprintf(raiz->email, sizeof(raiz->email), "%s", email);
-    snprintf(raiz->phone, sizeof(raiz->phone), "%s", telefone);
+    snprintf(raiz->phone, sizeof(raiz->phone), "%s", telefone);*/
     raiz->next = NULL;
 
     for (int i=0; i<3; i++){
@@ -110,8 +160,11 @@ int main(int argc, char const *argv[])
 
     }
     displayLL(raiz);
+
+    delContact(raiz);
+
+    displayLL(raiz);
     free(raiz);
-    
 
     return 0;
 }

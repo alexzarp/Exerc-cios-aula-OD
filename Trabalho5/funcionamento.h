@@ -7,3 +7,5 @@
 
 //Arquivos
 #include "InsereContato.c"
+#include "ordenador.c"
+#include "delContact.c"

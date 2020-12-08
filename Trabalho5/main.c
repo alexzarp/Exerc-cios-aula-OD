@@ -34,11 +34,6 @@ struct MREC {
 // Tipo criado para instanciar variaveis do tipo agenda
 typedef struct MREC Contact;
 
-/*typedef struct {
-    Contact *head;
-    Contact *tail;
-} Lista;*/
-
 // Apresenta o menu da aplicação e retorna a opção selecionada
 int menu() {
     int op=0;
@@ -50,12 +45,6 @@ int menu() {
        
     }
     return op;
-}
-
-// Permite excluir um contato da agenda
-void delContact ()
-{
-     return;
 }
 
 // Lista o conteudo da agenda (todos os campos)
@@ -93,15 +82,7 @@ int main() {
         file = fopen("agenda.uf","w+b");
 
         Contact *raiz = (Contact* ) malloc(sizeof (Contact));
-        snprintf(raiz->name, sizeof(raiz->name), "%s", nome);
-        raiz->birth.day = NULL;
-        raiz->birth.month = NULL;
-        raiz->birth.year = NULL;
-        snprintf(raiz->email, sizeof(raiz->email), "%s", email);
-        snprintf(raiz->phone, sizeof(raiz->phone), "%s", telefone);
         raiz->next = NULL;
-        //raiz->prev = NULL;
-        
     }
     else{
 
@@ -118,7 +99,7 @@ int main() {
           switch(op)
           {
               case 1 : insContact();
-              case 2 : delContact();
+              case 2 : delContact(raiz);
               case 3 : upContact();
               case 4 : queryContact();
               case 5 : listContacts();
