@@ -2,7 +2,7 @@
 #include<stdlib.h>
 
 FILE* ArquivoParaLeitura(){
-    FILE* arquivo = fopen("arquivo.tr","rb");
+    FILE* arquivo = fopen("arquivo.tr","r+b");
 
     if (arquivo == NULL){
         return "Arquivo vazio";

@@ -1,33 +1,30 @@
 // Permite o cadastro de um contato
-void insContact (Date *MContact, char *nome, char *email, char *telefone, Lista *lista) {
-    Contact *novoContato = malloc(sizeof (Contact));
-    
+void insContact (Contact *raiz, char *nome, char *email, char *telefone, int *dia, int *mes, int ano) {
+    Contact *novoContato = (Contact* ) malloc(sizeof (Contact));
     snprintf(novoContato->name, sizeof(novoContato->name), "%s", nome);
-    novoContato->birth = *MContact;
+    novoContato->birth.day = dia;
+    novoContato->birth.month = mes;
+    novoContato->birth.year = ano;
     snprintf(novoContato->email, sizeof(novoContato->email), "%s", email);
     snprintf(novoContato->phone, sizeof(novoContato->phone), "%s", telefone);
-    novoContato->next = NULL;
-    novoContato->prev = NULL;
 
-    Contact *agora = lista->head;
-    
+    Contact *nav = raiz->next;
+
+    int posicao = strcmp(novoContato->name, nav->name);
 // Isso se chama insetion sort
     do {
-        if (strcmp(novoContato->name, agora->name) == (-1 || 0)) {
-            //insere antes do atual
-
-            novoContato->next = agora;
-            agora->prev->next = novoContato;
-            novoContato->prev = agora->prev;
-            agora->prev = novoContato;
-            
+        if (strcmp(novoContato->name, nav->name) == -1) {  
             break;
         }
 
-        else  {
-            //vai para o proximo
-            agora = agora -> next;
+        else if (strcmp(novoContato->name, nav->name) == 0){
+            break;
         }
-    } while (agora != NULL);
 
+        nav = nav->next;
+
+    } while (nav != NULL);
+
+    novoContato->next = nav->next;
+    nav->next = novoContato;
 } 
