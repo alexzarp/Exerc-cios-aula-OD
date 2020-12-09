@@ -1,14 +1,14 @@
 void ordena(Contact *raiz){
-    Contact *aux;
+    Contact *aux, *aux2;
     char s[100];
 
     while (raiz != NULL){
         aux = raiz->next;
         while (aux != NULL){
             if (strcmp(raiz->name,aux->name) > 0){
-                strcpy(s, raiz->name);
+                strcpy(aux2, raiz->name);
                 strcpy(raiz->name, aux->name);
-                strcpy(aux->name,s);
+                strcpy(aux->name,aux2);
             }
 
             aux = aux->next;
@@ -52,4 +52,4 @@ void ordena(Contact *raiz){
             i = aux;
         } 
 
-    }/*
+    }/*1

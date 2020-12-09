@@ -21,6 +21,12 @@ struct MREC {
 // Tipo criado para instanciar variaveis do tipo agenda
 typedef struct MREC Contact;
 
+void swap(Contact *x, Contact *y){ 
+   Contact temp;
+   temp=*x;
+   *x=*y;
+   *y=temp;
+}
 // Permite o cadastro de um contato
 void insContact (Contact *raiz, char *nome, char *email, char *telefone, int dia, int mes, int ano) {
     
@@ -41,7 +47,7 @@ void delContact (Contact *raiz, char *nomeProcurado) {
     Contact *nav = raiz->next;
     Contact *anterior = raiz;
 
-    while (nav->next) {
+    while (nav) {
         anterior = nav;
         if (strcmp (nomeProcurado, nav->name) == 0) {
             break;
@@ -77,25 +83,33 @@ void displayLL(Contact *p)
 }
 
 void ordena(Contact *raiz){
-    
-    Contact *aux;
-    char s[100];
+    Contact *i,*j, *fim = NULL;
+   
+    if (raiz->next == NULL) {
+        return;
+    }
 
-    while (raiz != NULL){
-        
-        aux = raiz->next;
-        while (aux != NULL){
-            if (strcmp(raiz->name,aux->name) > 0){
-                strcpy(s, raiz->name);
-                strcpy(raiz->name, aux->name);
-                strcpy(aux->name,s);
+    for (i = raiz->next; i->next != NULL; i = i->next) {
+        for (j = raiz->next; j->next != fim; j = j->next) {
+            if (strcmp (i->name, j->name) > 0) {
+                swap(i,j);
+            }
+        }
+        fim = j;
+    }
+    /*while (b) {
+        b = b->next;
+        while (a) {
+            if (strcmp(a->name,b->name) > 0){
+                swap(a, b);
+   
             }
 
-            aux = aux->next;
+            b = b->next;
         }
-        raiz = raiz->next;
+        a = a->next;
     }
-    printf("entrou");
+    printf("entrou");*/
 }
 
 int main () {
@@ -108,18 +122,18 @@ int main () {
     Contact *raiz = (Contact* ) malloc(sizeof (Contact));
     raiz->next = NULL;
 
-    for (int i=0; i<10; i++){
-        //printf("Digite um nome ");
+    for (int i=0; i<4; i++){
+        printf("Digite um nome ");
         scanf("%s",nome);
-        //printf("Digite um email ");
+        printf("Digite um email ");
         scanf("%s",email);
-        //printf("Digite um telefone ");
+        printf("Digite um telefone ");
         scanf("%s",telefone);
-        //printf("Digite o dia ");
+        printf("Digite o dia ");
         scanf("%d",&dia);
-        //printf("Digite o mes ");
+        printf("Digite o mes ");
         scanf("%d",&mes);
-        //printf("Digite o ano ");
+        printf("Digite o ano ");
         scanf("%d",&ano);
         insContact(raiz,nome,email,telefone,dia,mes,ano);
     }
@@ -127,12 +141,12 @@ int main () {
 
     ordena(raiz);
     displayLL(raiz);
-    char nomeProcurado[100];
+    /*char nomeProcurado[100];
     printf ("Digite o nome a ser excluido: ");
     scanf ("%s", nomeProcurado);
     delContact(raiz, nomeProcurado);
 
-    displayLL(raiz);
+    displayLL(raiz);*/
     free(raiz);
 
     return 0;
