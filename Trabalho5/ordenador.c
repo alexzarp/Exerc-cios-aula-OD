@@ -1,3 +1,25 @@
+void ordena(Contact *raiz){
+    Contact *aux;
+    char s[100];
+
+    while (raiz != NULL){
+        aux = raiz->next;
+        while (aux != NULL){
+            if (strcmp(raiz->name,aux->name) > 0){
+                strcpy(s, raiz->name);
+                strcpy(raiz->name, aux->name);
+                strcpy(aux->name,s);
+            }
+
+            aux = aux->next;
+        }
+        raiz = raiz->next;
+    }    
+}
+
+
+
+
 //função de insertion sort com lista simplesmente encadeada
 /*void insertionSort(Contact *raiz){
     Contact *i,*j,*next,*name;

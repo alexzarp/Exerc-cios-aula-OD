@@ -32,71 +32,22 @@ void insContact (Contact *raiz, char *nome, char *email, char *telefone, int dia
     snprintf(novoContato->email, sizeof(novoContato->email), "%s", email);
     snprintf(novoContato->phone, sizeof(novoContato->phone), "%s", telefone);
 
-    Contact *contato = raiz;
-    Contact *aux;
-   
-// Isso se chama insetion sort
-    // Isso se chama insetion sort
-    do{
-
-        //printf("%s %s", novoContato->name, nav->name);
-        if (strcmp(contato->name, novoContato->name) < 0) {
-            novoContato->next = contato->next;
-            contato->next = novoContato;
-            printf("\nEntrou no primeiro if\n");
-            //printf("%s %s", novoContato->name, nav->name);
-
-            break;
-        }
-        else if (strcmp(contato->name, novoContato->name) > 0){
-            aux = novoContato;
-            novoContato->next = contato->next;
-            contato->next = aux;
-        }
-
-        else if (strcmp(contato->name, novoContato->name) == 0){
-            printf("\nEntrou no segundo if\n");
-            //printf("%s %s", novoContato->name, nav->name);
-            break;
-        }
-        printf("\nFoi ao proximo\n");
-        contato = contato->next;
-
-    }while (contato->next != NULL);
-    
-    printf("\nInseriu contato\n");
-    //novoContato->next = nav->next;
-    //nav->next = novoContato;
+    novoContato->next = raiz->next;
+    raiz->next = novoContato;
 }
 
 // Permite excluir um contato da agenda
-void delContact (Contact *raiz) {
-    int digito, contador = 0;
-    
-    Contact *aux = raiz->next;
+void delContact (Contact *raiz, char *nomeProcurado) {
     Contact *nav = raiz->next;
     Contact *anterior = raiz;
 
-    while (aux->next) {
-        contador++;
-        printf("%d - %s\n", contador, aux->name);
-        aux = aux->next;
-    }
-    free(aux);
-    printf("Por favor digite o número correspondente a pessoa\nque você deseja excluir: ");
-    scanf("%d", &digito);
-    contador = 0;
-
-    while (nav->next) {   
-        contador++;
+    while (nav->next) {
         anterior = nav;
-        nav = nav->next;
-
-        if (contador == digito) {
+        if (strcmp (nomeProcurado, nav->name) == 0) {
             break;
         }
+        nav = nav->next;
     }
-
     anterior->next = nav->next;
     nav->next = NULL;
     free(nav);
@@ -125,8 +76,29 @@ void displayLL(Contact *p)
         printf("Lista vazia.\n\n");
 }
 
-int main(int argc, char const *argv[])
-{
+void ordena(Contact *raiz){
+    
+    Contact *aux;
+    char s[100];
+
+    while (raiz != NULL){
+        
+        aux = raiz->next;
+        while (aux != NULL){
+            if (strcmp(raiz->name,aux->name) > 0){
+                strcpy(s, raiz->name);
+                strcpy(raiz->name, aux->name);
+                strcpy(aux->name,s);
+            }
+
+            aux = aux->next;
+        }
+        raiz = raiz->next;
+    }
+    printf("entrou");
+}
+
+int main () {
     char nome[30];
     char email[40];
     char telefone[15];
@@ -134,37 +106,35 @@ int main(int argc, char const *argv[])
 
 
     Contact *raiz = (Contact* ) malloc(sizeof (Contact));
-    /*snprintf(raiz->name, sizeof(raiz->name), "%s", nome);
-    raiz->birth.day = 0;
-    raiz->birth.month = 0;
-    raiz->birth.year = 0;
-    snprintf(raiz->email, sizeof(raiz->email), "%s", email);
-    snprintf(raiz->phone, sizeof(raiz->phone), "%s", telefone);*/
     raiz->next = NULL;
 
-    for (int i=0; i<3; i++){
-        printf("Digite um nome ");
+    for (int i=0; i<10; i++){
+        //printf("Digite um nome ");
         scanf("%s",nome);
-        printf("Digite um email ");
+        //printf("Digite um email ");
         scanf("%s",email);
-        printf("Digite um telefone ");
+        //printf("Digite um telefone ");
         scanf("%s",telefone);
-        printf("Digite o dia ");
+        //printf("Digite o dia ");
         scanf("%d",&dia);
-        printf("Digite o mes ");
+        //printf("Digite o mes ");
         scanf("%d",&mes);
-        printf("Digite o ano ");
+        //printf("Digite o ano ");
         scanf("%d",&ano);
         insContact(raiz,nome,email,telefone,dia,mes,ano);
-
-
     }
     displayLL(raiz);
 
-    delContact(raiz);
+    ordena(raiz);
+    displayLL(raiz);
+    char nomeProcurado[100];
+    printf ("Digite o nome a ser excluido: ");
+    scanf ("%s", nomeProcurado);
+    delContact(raiz, nomeProcurado);
 
     displayLL(raiz);
     free(raiz);
 
     return 0;
 }
+
