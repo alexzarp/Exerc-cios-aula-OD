@@ -1,7 +1,6 @@
 // Permite excluir um contato da agenda
 void delContact (Contact *raiz, char *nomeProcurado) {
     Contact *nav = raiz->next;
-    Contact *anterior = raiz;
 
     if (strcmp (nomeProcurado, nav->name)== 0 ) {
         raiz->next = nav->next;
@@ -9,6 +8,7 @@ void delContact (Contact *raiz, char *nomeProcurado) {
         return;
     }
 
+    Contact *anterior = raiz;
     while (nav->next) {
         anterior = nav;
         nav = nav->next;
