@@ -22,11 +22,37 @@ struct MREC {
 typedef struct MREC Contact;
 
 void swap(Contact *x, Contact *y){ 
-   Contact temp;
-   temp=*x;
-   *x=*y;
-   *y=temp;
+    Contact *temp = (Contact* ) malloc(sizeof (Contact));
+    snprintf(temp->name, sizeof(temp->name), "%s", x->name);
+    temp->birth.day = x->birth.day;
+    temp->birth.month = x->birth.month;
+    temp->birth.year = x->birth.year;
+    snprintf(temp->email, sizeof(temp->email), "%s", x->email);
+    snprintf(temp->phone, sizeof(temp->phone), "%s", x->phone);
+
+    snprintf(x->name, sizeof(x->name), "%s", y->name);
+    x->birth.day = y->birth.day;
+    x->birth.month = y->birth.month;
+    x->birth.year = y->birth.year;
+    snprintf(x->email, sizeof(x->email), "%s", y->email);
+    snprintf(x->phone, sizeof(x->phone), "%s", y->phone);
+    //x = x->next;
+
+    snprintf(y->name, sizeof(y->name), "%s", temp->name);
+    y->birth.day = temp->birth.day;
+    y->birth.month = temp->birth.month;
+    y->birth.year = temp->birth.year;
+    snprintf(y->email, sizeof(y->email), "%s", temp->email);
+    snprintf(y->phone, sizeof(y->phone), "%s", temp->phone);
+
+    free(temp);
 }
+    /*Contact *temp;
+    temp = x;
+    x = x->next;
+    y=temp;
+    free(temp);*/
+
 // Permite o cadastro de um contato
 void insContact (Contact *raiz, char *nome, char *email, char *telefone, int dia, int mes, int ano) {
     
@@ -42,17 +68,25 @@ void insContact (Contact *raiz, char *nome, char *email, char *telefone, int dia
     raiz->next = novoContato;
 }
 
+
+
 // Permite excluir um contato da agenda
 void delContact (Contact *raiz, char *nomeProcurado) {
     Contact *nav = raiz->next;
     Contact *anterior = raiz;
 
-    while (nav) {
+    if (strcmp (nomeProcurado, nav->name)== 0 ) {
+        raiz->next = nav->next;
+        free(nav);
+        return;
+    }
+
+    while (nav->next) {
         anterior = nav;
+        nav = nav->next;
         if (strcmp (nomeProcurado, nav->name) == 0) {
             break;
         }
-        nav = nav->next;
     }
     anterior->next = nav->next;
     nav->next = NULL;
@@ -83,33 +117,19 @@ void displayLL(Contact *p)
 }
 
 void ordena(Contact *raiz){
-    Contact *i,*j, *fim = NULL;
-   
-    if (raiz->next == NULL) {
-        return;
-    }
+    Contact *aux;
 
-    for (i = raiz->next; i->next != NULL; i = i->next) {
-        for (j = raiz->next; j->next != fim; j = j->next) {
-            if (strcmp (i->name, j->name) > 0) {
-                swap(i,j);
-            }
-        }
-        fim = j;
-    }
-    /*while (b) {
-        b = b->next;
-        while (a) {
-            if (strcmp(a->name,b->name) > 0){
-                swap(a, b);
-   
+    while (raiz != NULL){
+        aux = raiz->next;
+        while (aux != NULL){
+            if (strcmp(raiz->name,aux->name) > 0){
+                swap(raiz,aux);
             }
 
-            b = b->next;
+            aux = aux->next;
         }
-        a = a->next;
-    }
-    printf("entrou");*/
+        raiz = raiz->next;
+    }    
 }
 
 int main () {
@@ -122,10 +142,10 @@ int main () {
     Contact *raiz = (Contact* ) malloc(sizeof (Contact));
     raiz->next = NULL;
 
-    for (int i=0; i<4; i++){
+    for (int i=0; i<6; i++){
         printf("Digite um nome ");
         scanf("%s",nome);
-        printf("Digite um email ");
+        /*printf("Digite um email ");
         scanf("%s",email);
         printf("Digite um telefone ");
         scanf("%s",telefone);
@@ -134,19 +154,19 @@ int main () {
         printf("Digite o mes ");
         scanf("%d",&mes);
         printf("Digite o ano ");
-        scanf("%d",&ano);
+        scanf("%d",&ano);*/
         insContact(raiz,nome,email,telefone,dia,mes,ano);
     }
-    displayLL(raiz);
-
+    //displayLL(raiz);
     ordena(raiz);
     displayLL(raiz);
-    /*char nomeProcurado[100];
+
+    char nomeProcurado[100];
     printf ("Digite o nome a ser excluido: ");
     scanf ("%s", nomeProcurado);
     delContact(raiz, nomeProcurado);
 
-    displayLL(raiz);*/
+    displayLL(raiz);
     free(raiz);
 
     return 0;

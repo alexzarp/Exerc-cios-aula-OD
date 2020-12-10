@@ -3,12 +3,18 @@ void delContact (Contact *raiz, char *nomeProcurado) {
     Contact *nav = raiz->next;
     Contact *anterior = raiz;
 
-    while (nav) {
+    if (strcmp (nomeProcurado, nav->name)== 0 ) {
+        raiz->next = nav->next;
+        free(nav);
+        return;
+    }
+
+    while (nav->next) {
         anterior = nav;
+        nav = nav->next;
         if (strcmp (nomeProcurado, nav->name) == 0) {
             break;
         }
-        nav = nav->next;
     }
     anterior->next = nav->next;
     nav->next = NULL;
