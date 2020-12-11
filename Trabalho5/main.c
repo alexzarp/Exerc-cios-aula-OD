@@ -47,11 +47,7 @@ int menu() {
     return op;
 }
 
-// Lista o conteudo da agenda (todos os campos)
-void listContacts ()
-{
-     return;
-}
+
 
 // Permite consultar um contato da agenda por nome
 void queryContact ()

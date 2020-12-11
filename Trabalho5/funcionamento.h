@@ -9,3 +9,4 @@
 #include "InsereContato.c"
 #include "ordenador.c"
 #include "delContact.c"
+#include "listContacts.c"

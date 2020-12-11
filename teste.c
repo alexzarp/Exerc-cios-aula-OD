@@ -36,7 +36,6 @@ void swap(Contact *x, Contact *y){
     x->birth.year = y->birth.year;
     snprintf(x->email, sizeof(x->email), "%s", y->email);
     snprintf(x->phone, sizeof(x->phone), "%s", y->phone);
-    //x = x->next;
 
     snprintf(y->name, sizeof(y->name), "%s", temp->name);
     y->birth.day = temp->birth.day;
@@ -47,11 +46,17 @@ void swap(Contact *x, Contact *y){
 
     free(temp);
 }
-    /*Contact *temp;
-    temp = x;
-    x = x->next;
-    y=temp;
-    free(temp);*/
+
+int contagem(Contact *raiz) {
+    raiz = raiz->next;
+    int contagem = 0;
+
+    while (raiz) {
+        contagem++;
+    }
+
+    return contagem;
+}
 
 // Permite o cadastro de um contato
 void insContact (Contact *raiz, char *nome, char *email, char *telefone, int dia, int mes, int ano) {
@@ -68,7 +73,14 @@ void insContact (Contact *raiz, char *nome, char *email, char *telefone, int dia
     raiz->next = novoContato;
 }
 
+// Permite consultar um contato da agenda por nome
+void queryContact (char chave, Contact *raiz) {
+    int cima, meio, baixo;
 
+    int ultimo = contagem (raiz);
+    
+
+}
 
 // Permite excluir um contato da agenda
 void delContact (Contact *raiz, char *nomeProcurado) {
@@ -94,18 +106,18 @@ void delContact (Contact *raiz, char *nomeProcurado) {
     free(nav);
 }
 
-void displayLL(Contact *p)
+void listContacts(Contact *p)
 {
     p = p->next;
-    printf("Mostrando a lista:\n");
+    printf("Os contatos armaznados são:\n");
     if(p)
     {
         do
         {            
-            printf(" %s \n ", p->name);
-            printf(" %s \n ", p->email);
-            printf(" %s \n ", p->phone);
-            printf(" %d/%d/%d \n ", p->birth.day,p->birth.month,p->birth.year);
+            printf("%s \n ", p->name);
+            printf("%s \n ", p->email);
+            printf("%s \n ", p->phone);
+            printf("%d/%d/%d \n ", p->birth.day,p->birth.month,p->birth.year);
             printf("\n\n");
             p = p->next;
         }
@@ -114,7 +126,7 @@ void displayLL(Contact *p)
 
     }
     else
-        printf("Lista vazia.\n\n");
+        printf("Agenda vazia.\n\n");
 }
 
 void ordena(Contact *raiz){
@@ -131,6 +143,60 @@ void ordena(Contact *raiz){
         }
         raiz = raiz->next;
     }    
+}
+
+void upContact (Contact *raiz, char nomeProcurado) {
+    raiz = raiz->next;
+    char chave;
+    char info[100];
+    int info_int, info_int1, info_int2;
+
+    while (raiz->next) {
+        if (strcmp (nomeProcurado, raiz->name) == 0) {
+            //listContacts(raiz);
+            printf("Deseja atualizar o nome? [y or n] || [0 or 1] || [s or n]");
+            scanf("%c", chave);
+            if (chave == ('y' || 'Y' || '1' || 'S' || 's')) {
+                printf("Digite o novo nome: ");
+                scanf("%s",info);
+                snprintf(raiz->name, sizeof(raiz->name), "%s", info);
+            }
+
+            printf("Deseja atualizar o email? [y or n] || [0 or 1] || [s or n]");
+            scanf("%c", chave);
+            if (chave ==  ('y'  || 'Y' || '1' || 'S' || 's')){
+                scanf("%s",info);
+                snprintf(raiz->email, sizeof(raiz->email), "%s", info);
+            }
+            
+            printf("Deseja atualizar o telefone? [y or n] || [0 or 1] || [s or n]");
+            scanf("%c", chave);
+            if (chave == ('y' || 'Y' || '1' || 'S' || 's')) {
+                printf("Digite o novo telefone: ");
+                scanf("%s",info);
+                snprintf(raiz->phone, sizeof(raiz->phone), "%s", info);
+            }
+
+            printf("Deseja atualizar a data de aniversário? [y or n] || [0 or 1] || [s or n]");
+            scanf("%c", chave);
+            if (chave == ('y' || 'Y' || '1' || 'S' || 's')) {
+                printf("Digite a data dia/mes/ano, separado apenas por espaço: ");
+                scanf("%d %d %d",&info_int, &info_int1, &info_int2);
+                raiz->birth.day = info_int;
+                raiz->birth.month = info_int1;
+                raiz->birth.year = info_int2;
+            }
+
+            printf("Dados atualizados\n");
+            printf("Nome: %s\n", raiz->name);
+            printf("Email: %s\n", raiz->email);
+            printf("Telefone %s\n", raiz->phone);
+            printf("Data de nascimento %d/%d/%d", raiz->birth.day, raiz->birth.month, raiz->birth.year);
+            return;
+        }
+
+        raiz = raiz->next;
+    }
 }
 
 int main () {
@@ -158,16 +224,16 @@ int main () {
         scanf("%d",&ano);*/
         insContact(raiz,nome,email,telefone,dia,mes,ano);
     }
-    //displayLL(raiz);
+    //listContacts(raiz);
     ordena(raiz);
-    displayLL(raiz);
+    listContacts(raiz);
 
     char nomeProcurado[100];
     printf ("Digite o nome a ser excluido: ");
     scanf ("%s", nomeProcurado);
     delContact(raiz, nomeProcurado);
 
-    displayLL(raiz);
+    listContacts(raiz);
     free(raiz);
 
     return 0;
