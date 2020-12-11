@@ -106,10 +106,9 @@ void delContact (Contact *raiz, char *nomeProcurado) {
     free(nav);
 }
 
-void listContacts(Contact *p)
-{
+void listContacts(Contact *p) {
     p = p->next;
-    printf("Os contatos armaznados são:\n");
+    printf("\nOs contatos armaznados são:\n");
     if(p)
     {
         do
@@ -145,41 +144,45 @@ void ordena(Contact *raiz){
     }    
 }
 
-void upContact (Contact *raiz, char nomeProcurado) {
-    raiz = raiz->next;
-    char chave;
+void upContact (Contact *raiz, char *nomeProcurado) {
+    printf("entrou");
+    raiz = raiz->next;//vai para o primeiro elemento
+    char chave[30];
     char info[100];
     int info_int, info_int1, info_int2;
 
-    while (raiz->next) {
+    while (raiz != NULL) {
         if (strcmp (nomeProcurado, raiz->name) == 0) {
             //listContacts(raiz);
-            printf("Deseja atualizar o nome? [y or n] || [0 or 1] || [s or n]");
-            scanf("%c", chave);
-            if (chave == ('y' || 'Y' || '1' || 'S' || 's')) {
+            printf("\nDeseja atualizar o nome? [y or n]: ");
+            scanf("%s", chave);
+            if (strcmp(chave, "y") == 0)  {
                 printf("Digite o novo nome: ");
-                scanf("%s",info);
+                setbuf(stdin,NULL);
+                scanf("%[^\n]",info);
+                setbuf(stdin,NULL);
                 snprintf(raiz->name, sizeof(raiz->name), "%s", info);
             }
 
-            printf("Deseja atualizar o email? [y or n] || [0 or 1] || [s or n]");
-            scanf("%c", chave);
-            if (chave ==  ('y'  || 'Y' || '1' || 'S' || 's')){
+            printf("\nDeseja atualizar o email? [y or n]: ");
+            scanf("%s", chave);
+            if (strcmp(chave, "y") == 0) {
+                printf("Digite o novo email: ");
                 scanf("%s",info);
                 snprintf(raiz->email, sizeof(raiz->email), "%s", info);
             }
             
-            printf("Deseja atualizar o telefone? [y or n] || [0 or 1] || [s or n]");
-            scanf("%c", chave);
-            if (chave == ('y' || 'Y' || '1' || 'S' || 's')) {
+            printf("\nDeseja atualizar o telefone? [y or n]: ");
+            scanf("%s", chave);
+            if (strcmp(chave, "y") == 0)  {
                 printf("Digite o novo telefone: ");
                 scanf("%s",info);
                 snprintf(raiz->phone, sizeof(raiz->phone), "%s", info);
             }
 
-            printf("Deseja atualizar a data de aniversário? [y or n] || [0 or 1] || [s or n]");
-            scanf("%c", chave);
-            if (chave == ('y' || 'Y' || '1' || 'S' || 's')) {
+            printf("\nDeseja atualizar a data de aniversário? [y or n]: ");
+            scanf("%s", chave);
+            if (strcmp(chave, "y") == 0)  {
                 printf("Digite a data dia/mes/ano, separado apenas por espaço: ");
                 scanf("%d %d %d",&info_int, &info_int1, &info_int2);
                 raiz->birth.day = info_int;
@@ -187,11 +190,11 @@ void upContact (Contact *raiz, char nomeProcurado) {
                 raiz->birth.year = info_int2;
             }
 
-            printf("Dados atualizados\n");
+            printf("\nDados atualizados\n");
             printf("Nome: %s\n", raiz->name);
             printf("Email: %s\n", raiz->email);
             printf("Telefone %s\n", raiz->phone);
-            printf("Data de nascimento %d/%d/%d", raiz->birth.day, raiz->birth.month, raiz->birth.year);
+            printf("Data de nascimento %d/%d/%d\n", raiz->birth.day, raiz->birth.month, raiz->birth.year);
             return;
         }
 
@@ -200,7 +203,7 @@ void upContact (Contact *raiz, char nomeProcurado) {
 }
 
 int main () {
-    char nome[30];
+    char nome[100];
     char email[40];
     char telefone[15];
     int dia, mes, ano;
@@ -209,16 +212,18 @@ int main () {
     Contact *raiz = (Contact* ) malloc(sizeof (Contact));
     raiz->next = NULL;
 
-    for (int i=0; i<6; i++){
+    for (int i=0; i<2; i++){
         printf("Digite um nome ");
-        scanf("%s",nome);
-        /*printf("Digite um email ");
+        //fflush(stdin);
+        setbuf(stdin,NULL);
+        scanf("%[^\n]",nome);
+        printf("Digite um email ");
         scanf("%s",email);
         printf("Digite um telefone ");
         scanf("%s",telefone);
-        printf("Digite o dia ");
-        scanf("%d",&dia);
-        printf("Digite o mes ");
+        printf("Digite o dia/mes/ano separado por espaço ");
+        scanf("%d %d %d",&dia, &mes, &ano);
+        /*printf("Digite o mes ");
         scanf("%d",&mes);
         printf("Digite o ano ");
         scanf("%d",&ano);*/
@@ -229,10 +234,13 @@ int main () {
     listContacts(raiz);
 
     char nomeProcurado[100];
-    printf ("Digite o nome a ser excluido: ");
-    scanf ("%s", nomeProcurado);
-    delContact(raiz, nomeProcurado);
-
+    printf ("Digite o nome a ser alterado: ");
+    setbuf(stdin,NULL);
+    scanf ("%[^\n]", nomeProcurado);
+    //delContact(raiz, nomeProcurado);
+    upContact(raiz, nomeProcurado);
+    printf("nome %s ", nomeProcurado);
+    
     listContacts(raiz);
     free(raiz);
 
