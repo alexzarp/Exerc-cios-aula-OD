@@ -74,12 +74,25 @@ void insContact (Contact *raiz, char *nome, char *email, char *telefone, int dia
 }
 
 // Permite consultar um contato da agenda por nome
-void queryContact (char chave, Contact *raiz) {
-    int cima, meio, baixo;
+int queryContact (Contact *raiz, char *nomeProcurado, int n) {
+    int ativacao = 0;
+    raiz = raiz->next;
 
-    int ultimo = contagem (raiz);
-    
+    while (raiz != NULL) {
+        if (strncmp (raiz->name, nomeProcurado, n) == 0) {
+            printf("\nNome: %s\n", raiz->name);
+            printf("Email: %s\n", raiz->email);
+            printf("Telefone: %s\n", raiz->phone);
+            printf("Data de nascimento: %d/%d/%d\n", raiz->birth.day, raiz->birth.month, raiz->birth.year);
+            ativacao = 1;
+        }
 
+        if ((ativacao == 1) && (strncmp (raiz->name, nomeProcurado, n) != 0)) {
+            break;
+        }
+        raiz = raiz->next;
+    }
+        
 }
 
 // Permite excluir um contato da agenda
@@ -137,11 +150,11 @@ void ordena(Contact *raiz){
             if (strcmp(raiz->name,aux->name) > 0){
                 swap(raiz,aux);
             }
-
             aux = aux->next;
         }
         raiz = raiz->next;
-    }    
+    }
+    //Aqui deveria haver um free no aux?
 }
 
 void upContact (Contact *raiz, char *nomeProcurado) {
@@ -160,7 +173,7 @@ void upContact (Contact *raiz, char *nomeProcurado) {
                 printf("Digite o novo nome: ");
                 setbuf(stdin,NULL);
                 scanf("%[^\n]",info);
-                setbuf(stdin,NULL);
+                //setbuf(stdin,NULL);
                 snprintf(raiz->name, sizeof(raiz->name), "%s", info);
             }
 
@@ -212,7 +225,7 @@ int main () {
     Contact *raiz = (Contact* ) malloc(sizeof (Contact));
     raiz->next = NULL;
 
-    for (int i=0; i<2; i++){
+    for (int i=0; i<4; i++){
         printf("Digite um nome ");
         //fflush(stdin);
         setbuf(stdin,NULL);
@@ -234,12 +247,14 @@ int main () {
     listContacts(raiz);
 
     char nomeProcurado[100];
-    printf ("Digite o nome a ser alterado: ");
+    printf ("Digite o nome a ser procurado: ");
     setbuf(stdin,NULL);
     scanf ("%[^\n]", nomeProcurado);
     //delContact(raiz, nomeProcurado);
-    upContact(raiz, nomeProcurado);
-    printf("nome %s ", nomeProcurado);
+    //upContact(raiz, nomeProcurado);
+    int n = strlen (nomeProcurado);
+    queryContact(raiz, nomeProcurado, n);
+    
     
     listContacts(raiz);
     free(raiz);

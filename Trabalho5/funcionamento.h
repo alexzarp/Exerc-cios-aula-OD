@@ -6,7 +6,10 @@
 #include <string.h>
 
 //Arquivos
-#include "InsereContato.c"
-#include "ordenador.c"
+#include "insContato.c"
+#include "ordena.c"
 #include "delContact.c"
 #include "listContacts.c"
+#include "querycontact.c"
+#include "swap.c"
+#include "upContact"

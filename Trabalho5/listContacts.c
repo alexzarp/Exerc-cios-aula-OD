@@ -1,8 +1,7 @@
 // Lista o conteudo da agenda (todos os campos)
-void listContacts(Contact *p)
-{
+void listContacts(Contact *p) {
     p = p->next;
-    printf("Os contatos armaznados são:\n");
+    printf("\nOs contatos armaznados são:\n");
     if(p)
     {
         do

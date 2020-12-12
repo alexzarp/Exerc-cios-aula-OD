@@ -47,58 +47,47 @@ int menu() {
     return op;
 }
 
-
-
-// Permite consultar um contato da agenda por nome
-void queryContact ()
-{
-     return;
-}
-
-// Permite a atualização dos dados de um contato da agenda
-void upContact ()
-{
-     return;
-}
-
-
 // Programa principal
 int main() {
     int op=0;
+    /*FILE *arquivo;
+    arquivo = fopen("agenda.ab","rb");
+    //se for igual a null arquivo vazio
 
-    FILE *file;
-    file = fopen("agenda.uf","r+b");//abrindo o arquivo somente para leitura 
+    if (arquivo == NULL){
+        arquivo = fopen("agenda.ab","wb");
+        
+    } else {
+        arquivo = fopen("agenda.ab", "rb");
+        
+        Contact *aux = malloc (sizeof(Contact));
+
+        while (fread(aux, sizeof(aux), 1, fileOrigem) > 0){
+            aux->next = NULL;
     
-    if (file == NULL){
-        //arquivo vazio
-        char nome[30];
-        char email[40];
-        char telefone[15];
+            if (headLista == NULL) //verifica se vai ser o primeiro
+                headLista = aux;
 
-        file = fopen("agenda.uf","w+b");
-
-        Contact *raiz = (Contact* ) malloc(sizeof (Contact));
-        raiz->next = NULL;
-    }
-    else{
-
-    }
+            if (ultimo == NULL)  //controla o ultimo para encadear
+                ultimo = aux;
+            else{
+                ultimo->next = aux;
+                ultimo = aux;
+            }
+            aux = malloc (sizeof(Pessoa));
+        }
+    }*/
 
     
-
-    
-    
-    
-    while (op!=EXIT)
+    while (op != EXIT)
     {
           op=menu();
-          switch(op)
-          {
-              case 1 : insContact();
-              case 2 : delContact(raiz);
-              case 3 : upContact();
-              case 4 : queryContact();
-              case 5 : listContacts();
+          switch(op) {
+              case 1 : insContact(raiz, nome, email, phone, dia, mes, ano);
+              case 2 : delContact(raiz, nomeProcurado);
+              case 3 : upContact(raiz, nomeProcurado);
+              case 4 : queryContact(raiz, nomeProcurado, n);
+              case 5 : listContacts(raiz);
           }
     }
     return 0;
