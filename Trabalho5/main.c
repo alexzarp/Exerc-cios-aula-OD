@@ -29,7 +29,7 @@ struct MREC {
        char phone[15];
 
 	   struct MREC *next;
-	   struct MREC *prev;
+	   //struct MREC *prev; Fizemos uma lista simplesmente encadeada.
 };
 // Tipo criado para instanciar variaveis do tipo agenda
 typedef struct MREC Contact;
@@ -37,12 +37,14 @@ typedef struct MREC Contact;
 // Apresenta o menu da aplicação e retorna a opção selecionada
 int menu() {
     int op=0;
-    while (op!=EXIT)
-    {
-        printf("%d Finaliza",EXIT);
-        printf("\n: ");
+    while (op != EXIT) {
+        printf("Para finalizar o programa e salvar automaticamente, digite %d e tecle enter. E da mesma forma tecle:\n",EXIT);
+        printf("1 - Para inserir um novo contato;\n");
+        printf("2 - Para deletar um contato existente;\n");
+        printf("3 - Para atualizar um contato existente;\n");
+        printf("4 - Para pesquisar contatos;\n");
+        printf("5 - Para listar todos os contatos contidos na memória.\n");
         scanf("%d",&op);
-       
     }
     return op;
 }
@@ -50,6 +52,17 @@ int menu() {
 // Programa principal
 int main() {
     int op=0;
+
+    char nome[30];
+    char email[40];
+    char telefone[15];
+    int dia, mes, ano;
+
+    char nomeProcurado[30];
+    int n = 0;
+
+    Contact *raiz = (Contact*) malloc(sizeof (Contact));
+    raiz->next = NULL;
     /*FILE *arquivo;
     arquivo = fopen("agenda.ab","rb");
     //se for igual a null arquivo vazio
@@ -79,16 +92,45 @@ int main() {
     }*/
 
     
-    while (op != EXIT)
-    {
-          op=menu();
-          switch(op) {
-              case 1 : insContact(raiz, nome, email, phone, dia, mes, ano);
-              case 2 : delContact(raiz, nomeProcurado);
-              case 3 : upContact(raiz, nomeProcurado);
-              case 4 : queryContact(raiz, nomeProcurado, n);
-              case 5 : listContacts(raiz);
-          }
+    while (op != EXIT) {       
+        op=menu();
+        switch(op) {
+            case 1:
+                printf("Digite um nome ");
+                setbuf(stdin,NULL);
+                scanf("%[^\n]",nome);
+                printf("Digite um email ");
+                scanf("%s",email);
+                printf("Digite um telefone ");
+                scanf("%s",telefone);
+                printf("Digite o dia/mes/ano separado por espaço ");
+                scanf("%d %d %d",&dia, &mes, &ano);
+                insContact(raiz, nome, email, telefone, dia, mes, ano);
+
+            case 2:
+                printf("Digite o nome completo da pessoa que deseja excluir,\npor exemplo, Gabriel Lima da Silva: ");
+                setbuf(stdin,NULL);
+                scanf("%[^\n]",nomeProcurado);
+                delContact(raiz, nomeProcurado);
+
+            case 3:
+                printf("Digite o nome completo da pessoa que deseja atualizar,\npor exemplo, Gabriel Lima da Silva: ");
+                setbuf(stdin,NULL);
+                scanf("%[^\n]",nomeProcurado);
+                upContact(raiz, nomeProcurado);
+
+            case 4:
+                printf("Digite o nome que seja buscar na agenda,\npor exemlo Gabriel, joão Lima ou PEDRO SANTOS");
+                setbuf(stdin,NULL);
+                scanf("%[^\n]",nomeProcurado);
+                n = strlen(nomeProcurado);
+                queryContact(raiz, nomeProcurado, n);
+
+            case 5:
+                listContacts(raiz);
+        }
+        ordena(raiz);
     }
+    free(raiz);
     return 0;
 }
