@@ -243,16 +243,19 @@ int menu() {
     }
 }
 
-char verificaPalvra (char nome) {
-    for (int i = 0; i < strlen (nome); i++) {
-        if ((nome[i] < 'A' && nome[i] > 'Z') || (nome[i] < 'a' && nome[i] > 'z')) {
-            printf("Nome não aceito, tente sem caracteres especiais! Digite o nome novamente da forma aceita: ");
+char verificaPalvra (char nome[]) {
+    int i = 0;
+    while (i < strlen (nome)) {
+        if ((nome[i] > 'A' || nome[i] < 'Z') || (nome[i] > 'a' || nome[i] < 'z')) {
+            printf("Nome não aceito, não insira caracteres especiais! Digite o nome novamente da forma aceita: ");
             setbuf(stdin,NULL);
             scanf("%[^\n]",nome);
-            return nome;
+            break;
         }
+        i++;
     }
-    return nome;
+
+    return nome[30];
 }
 
 // Programa principal
@@ -274,9 +277,10 @@ int main() {
 
     Contact *raiz = (Contact*) malloc(sizeof (Contact));
     raiz->next = NULL;
-    Contact *inicio = NULL;
+    Contact *inicio = (Contact*) malloc(sizeof (Contact));
     Contact *ultimo = NULL;
-
+    inicio = NULL;
+    
     FILE *arquivo;
     arquivo = fopen("agenda.ab","rb");
    
@@ -301,6 +305,7 @@ int main() {
             raiz = malloc(sizeof(Contact));
         }
     }
+    fclose(arquivo);
     
     while (op != EXIT) {       
         op = menu();
@@ -309,7 +314,7 @@ int main() {
                 printf("Digite um nome: ");
                 setbuf(stdin,NULL);
                 scanf("%[^\n]",nome);
-                nome = verificaPalvra(nome1);
+                nome[30] = verificaPalvra(nome);
                 for (int i = 0; i < strlen(nome); i++) {
                     nome[i] = toupper(nome[i]);
                 }
@@ -337,6 +342,7 @@ int main() {
                 printf("Digite o nome completo da pessoa que deseja atualizar,\npor exemplo, Gabriel Lima da Silva: ");
                 setbuf(stdin,NULL);
                 scanf("%[^\n]",nomeProcurado);
+                nomeProcurado[30] = verificaPalvra(nomeProcurado);
                 for (int i = 0; i < strlen(nomeProcurado); i++) {
                     nomeProcurado[i] = toupper(nomeProcurado[i]);
                 }
@@ -345,7 +351,7 @@ int main() {
                 break;
 
             case 4:
-                printf("Digite o nome que seja buscar na agenda,\npor exemlo Gabriel, joão Lima ou PEDRO SANTOS ");
+                printf("Digite o nome que seja buscar na agenda,\npor exemlo Gabriel, joao Lima ou PEDRO SANTOS: ");
                 setbuf(stdin,NULL);
                 scanf("%[^\n]",nomeProcurado);
                 for (int i = 0; i < strlen(nomeProcurado); i++) {
@@ -360,9 +366,12 @@ int main() {
                 break;
         }
     }
+
+    arquivo = fopen("agenda.ab", "wb");
     for (raiz = inicio; raiz != NULL; raiz = raiz->next){
         fwrite(raiz, sizeof(Contact),1,arquivo);
     }
+    fclose(arquivo);
     
     free(raiz);
     return 0;
