@@ -94,6 +94,10 @@ int queryContact (Contact *raiz, char *nomeProcurado, int n) {
         if ((ativacao == 1) && (strncmp (raiz->name, nomeProcurado, n) != 0)) {
             break;
         }
+
+        else if ((raiz->next == NULL) && (ativacao == 0)) {
+            printf("Nenhum nome encontrado!\n");
+        }
         raiz = raiz->next;
     }
         
@@ -114,6 +118,9 @@ void upContact (Contact *raiz, char *nomeProcurado) {
                 printf("Digite o novo nome: ");
                 setbuf(stdin,NULL);
                 scanf("%[^\n]",info);
+                for (int i = 0; i < strlen(info); i++) {
+                    info[i] = toupper(info[i]);
+                }
                 //setbuf(stdin,NULL);
                 snprintf(raiz->name, sizeof(raiz->name), "%s", info);
             }
@@ -175,24 +182,24 @@ void ordena(Contact *raiz){
 // Lista o conteudo da agenda (todos os campos)
 void listContacts(Contact *p) {
     p = p->next;
-    printf("\nOs contatos armaznados são:\n");
+    printf("\nOs contatos armazenados são:\n");
     if(p)
     {
         do
         {            
-            printf("%s \n ", p->name);
-            printf("%s \n ", p->email);
-            printf("%s \n ", p->phone);
-            printf("%d/%d/%d \n ", p->birth.day,p->birth.month,p->birth.year);
-            printf("\n\n");
+            printf("Nome: %s\n", p->name);
+            printf("Email: %s\n", p->email);
+            printf("Telefone: %s\n", p->phone);
+            printf("Data de nascimento: %d/%d/%d\n", p->birth.day,p->birth.month,p->birth.year);
+            printf("\n");
             p = p->next;
         }
         while(p);
-        printf("\n\n");
+        
 
     }
     else
-        printf("Agenda vazia.\n\n");
+        printf("Agenda vazia.\n");
 }
 
 void swap(Contact *x, Contact *y){ 
@@ -225,7 +232,7 @@ void swap(Contact *x, Contact *y){
 int menu() {
     int op=0;
     while (op != EXIT) {
-        printf("Para finalizar o programa e salvar automaticamente, digite %d e tecle enter. E da mesma forma tecle:\n",EXIT);
+        printf("\nPara finalizar o programa e salvar automaticamente, digite %d e tecle enter. E da mesma forma tecle:\n",EXIT);
         printf("1 - Para inserir um novo contato;\n");
         printf("2 - Para deletar um contato existente;\n");
         printf("3 - Para atualizar um contato existente;\n");
@@ -234,6 +241,18 @@ int menu() {
         scanf("%d",&op);
         return op;
     }
+}
+
+char verificaPalvra (char nome) {
+    for (int i = 0; i < strlen (nome); i++) {
+        if ((nome[i] < 'A' && nome[i] > 'Z') || (nome[i] < 'a' && nome[i] > 'z')) {
+            printf("Nome não aceito, tente sem caracteres especiais! Digite o nome novamente da forma aceita: ");
+            setbuf(stdin,NULL);
+            scanf("%[^\n]",nome);
+            return nome;
+        }
+    }
+    return nome;
 }
 
 // Programa principal
@@ -248,51 +267,57 @@ int main() {
     char nomeProcurado[30];
     int n = 0;
 
+    printf("===================================!!!!!!Atenção!!!!!!===================================\n");
+    printf("   Os nomes para pessoas registradas nesta agenda estão restritos a caracteres comuns,\n");
+    printf("sem qualquer caracter do tipo epecial, sejam eles acentuação ou letras especiais como 'ç'\n");
+    printf("=========================================================================================\n\n");
+
     Contact *raiz = (Contact*) malloc(sizeof (Contact));
     raiz->next = NULL;
-    /*FILE *arquivo;
-    arquivo = fopen("agenda.ab","rb");
-    //se for igual a null arquivo vazio
+    Contact *inicio = NULL;
+    Contact *ultimo = NULL;
 
-    if (arquivo == NULL){
+    FILE *arquivo;
+    arquivo = fopen("agenda.ab","rb");
+   
+
+    if (arquivo == NULL){ //se for igual a null arquivo vazio
         arquivo = fopen("agenda.ab","wb");
-        
     } else {
         arquivo = fopen("agenda.ab", "rb");
         
-        Contact *aux = malloc (sizeof(Contact));
-
-        while (fread(aux, sizeof(aux), 1, fileOrigem) > 0){
-            aux->next = NULL;
+        while (fread(raiz, sizeof(raiz), 1, arquivo) > 0){
+            raiz->next = NULL;
     
-            if (headLista == NULL) //verifica se vai ser o primeiro
-                headLista = aux;
+            if (inicio == NULL) //verifica se vai ser o primeiro
+                inicio = raiz;
 
             if (ultimo == NULL)  //controla o ultimo para encadear
-                ultimo = aux;
+                ultimo = raiz;
             else{
-                ultimo->next = aux;
-                ultimo = aux;
+                ultimo->next = raiz;
+                ultimo = raiz;
             }
-            aux = malloc (sizeof(Pessoa));
+            raiz = malloc(sizeof(Contact));
         }
-    }*/
+    }
     
     while (op != EXIT) {       
         op = menu();
         switch(op) {
             case 1:
-                printf("Digite um nome ");
+                printf("Digite um nome: ");
                 setbuf(stdin,NULL);
                 scanf("%[^\n]",nome);
-                for (int i; i < strlen(nome); i++) {
+                nome = verificaPalvra(nome1);
+                for (int i = 0; i < strlen(nome); i++) {
                     nome[i] = toupper(nome[i]);
                 }
-                printf("Digite um email ");
+                printf("Digite um email: ");
                 scanf("%s",email);
-                printf("Digite um telefone ");
+                printf("Digite um telefone: ");
                 scanf("%s",telefone);
-                printf("Digite o dia/mes/ano separado por espaço ");
+                printf("Digite o dia/mes/ano separado por espaço: ");
                 scanf("%d %d %d",&dia, &mes, &ano);
                 insContact(raiz, nome, email, telefone, dia, mes, ano);
                 ordena(raiz);
@@ -302,7 +327,7 @@ int main() {
                 printf("Digite o nome completo da pessoa que deseja excluir,\npor exemplo, Gabriel Lima da Silva: ");
                 setbuf(stdin,NULL);
                 scanf("%[^\n]",nomeProcurado);
-                for (int i; i < strlen(nomeProcurado); i++) {
+                for (int i = 0; i < strlen(nomeProcurado); i++) {
                     nomeProcurado[i] = toupper(nomeProcurado[i]);
                 }
                 delContact(raiz, nomeProcurado);
@@ -312,7 +337,7 @@ int main() {
                 printf("Digite o nome completo da pessoa que deseja atualizar,\npor exemplo, Gabriel Lima da Silva: ");
                 setbuf(stdin,NULL);
                 scanf("%[^\n]",nomeProcurado);
-                for (int i; i < strlen(nomeProcurado); i++) {
+                for (int i = 0; i < strlen(nomeProcurado); i++) {
                     nomeProcurado[i] = toupper(nomeProcurado[i]);
                 }
                 upContact(raiz, nomeProcurado);
@@ -323,7 +348,7 @@ int main() {
                 printf("Digite o nome que seja buscar na agenda,\npor exemlo Gabriel, joão Lima ou PEDRO SANTOS ");
                 setbuf(stdin,NULL);
                 scanf("%[^\n]",nomeProcurado);
-                for (int i; i < strlen(nomeProcurado); i++) {
+                for (int i = 0; i < strlen(nomeProcurado); i++) {
                     nomeProcurado[i] = toupper(nomeProcurado[i]);
                 }
                 n = strlen(nomeProcurado);
@@ -334,6 +359,9 @@ int main() {
                 listContacts(raiz);
                 break;
         }
+    }
+    for (raiz = inicio; raiz != NULL; raiz = raiz->next){
+        fwrite(raiz, sizeof(Contact),1,arquivo);
     }
     
     free(raiz);
