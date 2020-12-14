@@ -36,8 +36,6 @@ struct MREC {
 // Tipo criado para instanciar variaveis do tipo agenda
 typedef struct MREC Contact;
 
-void swap(Contact *x, Contact *y);
-
 // Permite excluir um contato da agenda
 void delContact (Contact *raiz, char *nomeProcurado) {
     Contact *nav = raiz->next;
@@ -163,6 +161,32 @@ void upContact (Contact *raiz, char *nomeProcurado) {
     }
 }
 
+void swap(Contact *x, Contact *y){ 
+    Contact *temp = (Contact* ) malloc(sizeof (Contact));
+    snprintf(temp->name, sizeof(temp->name), "%s", x->name);
+    temp->birth.day = x->birth.day;
+    temp->birth.month = x->birth.month;
+    temp->birth.year = x->birth.year;
+    snprintf(temp->email, sizeof(temp->email), "%s", x->email);
+    snprintf(temp->phone, sizeof(temp->phone), "%s", x->phone);
+
+    snprintf(x->name, sizeof(x->name), "%s", y->name);
+    x->birth.day = y->birth.day;
+    x->birth.month = y->birth.month;
+    x->birth.year = y->birth.year;
+    snprintf(x->email, sizeof(x->email), "%s", y->email);
+    snprintf(x->phone, sizeof(x->phone), "%s", y->phone);
+
+    snprintf(y->name, sizeof(y->name), "%s", temp->name);
+    y->birth.day = temp->birth.day;
+    y->birth.month = temp->birth.month;
+    y->birth.year = temp->birth.year;
+    snprintf(y->email, sizeof(y->email), "%s", temp->email);
+    snprintf(y->phone, sizeof(y->phone), "%s", temp->phone);
+
+    free(temp);
+}
+
 void ordena(Contact *raiz){
     Contact *aux;
 
@@ -202,32 +226,6 @@ void listContacts(Contact *p) {
         printf("Agenda vazia.\n");
 }
 
-void swap(Contact *x, Contact *y){ 
-    Contact *temp = (Contact* ) malloc(sizeof (Contact));
-    snprintf(temp->name, sizeof(temp->name), "%s", x->name);
-    temp->birth.day = x->birth.day;
-    temp->birth.month = x->birth.month;
-    temp->birth.year = x->birth.year;
-    snprintf(temp->email, sizeof(temp->email), "%s", x->email);
-    snprintf(temp->phone, sizeof(temp->phone), "%s", x->phone);
-
-    snprintf(x->name, sizeof(x->name), "%s", y->name);
-    x->birth.day = y->birth.day;
-    x->birth.month = y->birth.month;
-    x->birth.year = y->birth.year;
-    snprintf(x->email, sizeof(x->email), "%s", y->email);
-    snprintf(x->phone, sizeof(x->phone), "%s", y->phone);
-
-    snprintf(y->name, sizeof(y->name), "%s", temp->name);
-    y->birth.day = temp->birth.day;
-    y->birth.month = temp->birth.month;
-    y->birth.year = temp->birth.year;
-    snprintf(y->email, sizeof(y->email), "%s", temp->email);
-    snprintf(y->phone, sizeof(y->phone), "%s", temp->phone);
-
-    free(temp);
-}
-
 // Apresenta o menu da aplicação e retorna a opção selecionada
 int menu() {
     int op=0;
@@ -244,17 +242,14 @@ int menu() {
 }
 
 char verificaPalvra (char nome[]) {
-    int i = 0;
-    while (i < strlen (nome)) {
-        if ((nome[i] > 'A' || nome[i] < 'Z') || (nome[i] > 'a' || nome[i] < 'z')) {
-            printf("Nome não aceito, não insira caracteres especiais! Digite o nome novamente da forma aceita: ");
+    for (int i = 0; i < strlen (nome); i++) {
+        if ((nome[i] < 'A' || nome[i] > 'Z') || (nome[i] < 'a' || nome[i] > 'z')) {
+            printf("Nome não aceito, tente sem caracteres especiais! Digite o nome novamente da forma aceita: ");
             setbuf(stdin,NULL);
             scanf("%[^\n]",nome);
-            break;
+            return nome[30];
         }
-        i++;
     }
-
     return nome[30];
 }
 
