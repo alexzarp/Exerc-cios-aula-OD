@@ -251,6 +251,33 @@ char verificaPalvra (char nome[]) {
     return nome[30];
 }
 
+Contact *leArquivo(Contact *raiz, FILE *arquivo){
+    
+    Contact *aux = malloc(sizeof(Contact));
+    while (fread(aux, sizeof(Contact), 1, arquivo) > 0) {
+        aux->next = raiz->next;
+        raiz->next = aux;
+
+        aux = malloc(sizeof(Contact));
+    }
+    return raiz;
+    //free(aux);
+}
+
+void *escreveArquivo(Contact *raiz, FILE *f){
+    Contact *aux = malloc(sizeof(Contact));
+    aux = NULL;
+
+    if (raiz == NULL){
+        printf("Esta vazio");
+    } else {
+        for (raiz = aux; raiz!=NULL; raiz = raiz->next){
+            fwrite(raiz,sizeof(Contact),1,f);
+        }
+    
+    }
+}
+
 // Programa principal
 int main() {
     int op=0;
@@ -262,6 +289,7 @@ int main() {
 
     char nomeProcurado[30];
     int n = 0;
+    int save = 0;
 
     printf("\n===================================!!!!!!Atenção!!!!!!===================================\n");
     printf("   Os nomes para pessoas registradas nesta agenda estão restritos a caracteres comuns,\n");
@@ -270,35 +298,16 @@ int main() {
 
     Contact *raiz = (Contact*) malloc(sizeof (Contact));
     raiz->next = NULL;
-    Contact *inicio = (Contact*) malloc(sizeof (Contact));
-    Contact *ultimo = NULL;
-    inicio = NULL;
-    
-    FILE *arquivo;
-    arquivo = fopen("agenda.ab","rb");
-   
 
-    if (arquivo == NULL){ //se for igual a null arquivo vazio
-        arquivo = fopen("agenda.ab","wb");
-    } else {
-        arquivo = fopen("agenda.ab", "rb");
-        
-        while (fread(raiz, sizeof(raiz), 1, arquivo) > 0){
-            raiz->next = NULL;
-    
-            if (inicio == NULL) //verifica se vai ser o primeiro
-                inicio = raiz;
-
-            if (ultimo == NULL)  //controla o ultimo para encadear
-                ultimo = raiz;
-            else{
-                ultimo->next = raiz;
-                ultimo = raiz;
-            }
-            raiz = malloc(sizeof(Contact));
-        }
+    FILE *agenda = fopen("agenda.ab","a+b");
+    if (agenda == NULL){
+        printf("Erro ao abrir o arquivo");
+        exit(1);
     }
-    fclose(arquivo);
+    raiz = leArquivo(raiz,agenda);
+    fclose(agenda);
+
+    printf("oi\n");
     
     while (op != EXIT) {       
         op = menu();
@@ -319,6 +328,7 @@ int main() {
                 scanf("%d %d %d",&dia, &mes, &ano);
                 insContact(raiz, nome, email, telefone, dia, mes, ano);
                 ordena(raiz);
+                save = 1;
                 break;
 
             case 2:
@@ -330,6 +340,7 @@ int main() {
                     nomeProcurado[i] = toupper(nomeProcurado[i]);
                 }
                 delContact(raiz, nomeProcurado);
+                save = 1;
                 break;
 
             case 3:
@@ -342,6 +353,7 @@ int main() {
                 }
                 upContact(raiz, nomeProcurado);
                 ordena(raiz);
+                save = 1;
                 break;
 
             case 4:
@@ -358,14 +370,25 @@ int main() {
             case 5:
                 listContacts(raiz);
                 break;
+
+            default : 
+                if (op != EXIT) {
+                    printf("Opção inválida! Digite uma opção válida.\n");
+                }
+                break;
         }
     }
 
-    arquivo = fopen("agenda.ab", "wb");
-    for (raiz = inicio; raiz != NULL; raiz = raiz->next){
-        fwrite(raiz, sizeof(Contact),1,arquivo);
+    char key;
+    if (save == 1) {
+        printf ("\nDeseja salvar alterações feitas? [y or n]: ");
+        scanf("%s", key);
+        if (strcmp(key, "y") == 0) {
+            agenda = fopen("agenda.ab","wb");
+            escreveArquivo(raiz,agenda);
+            fclose(agenda);
+        }
     }
-    fclose(arquivo);
     
     free(raiz);
     return 0;
