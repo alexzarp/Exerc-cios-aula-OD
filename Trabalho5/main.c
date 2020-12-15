@@ -98,7 +98,6 @@ int queryContact (Contact *raiz, char *nomeProcurado, int n) {
         }
         raiz = raiz->next;
     }
-        
 }
 
 void upContact (Contact *raiz, char *nomeProcurado) {
@@ -219,8 +218,6 @@ void listContacts(Contact *p) {
             p = p->next;
         }
         while(p);
-        
-
     }
     else
         printf("Agenda vazia.\n");
@@ -328,6 +325,7 @@ int main() {
                 printf("Digite o nome completo da pessoa que deseja excluir,\npor exemplo, Gabriel Lima da Silva: ");
                 setbuf(stdin,NULL);
                 scanf("%[^\n]",nomeProcurado);
+                nomeProcurado[30] = verificaPalvra(nomeProcurado);
                 for (int i = 0; i < strlen(nomeProcurado); i++) {
                     nomeProcurado[i] = toupper(nomeProcurado[i]);
                 }
