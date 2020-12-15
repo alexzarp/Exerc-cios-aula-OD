@@ -243,11 +243,12 @@ int menu() {
 
 char verificaPalvra (char nome[]) {
     for (int i = 0; i < strlen (nome); i++) {
-        if ((nome[i] < 'A' || nome[i] > 'Z') || (nome[i] < 'a' || nome[i] > 'z')) {
+        if ((nome[i] < 'A' || nome[i] > 'Z') && (nome[i] < 'a' || nome[i] > 'z')) {
             printf("Nome não aceito, tente sem caracteres especiais! Digite o nome novamente da forma aceita: ");
             setbuf(stdin,NULL);
             scanf("%[^\n]",nome);
-            return nome[30];
+            verificaPalvra(nome);
+            break;
         }
     }
     return nome[30];
@@ -265,7 +266,7 @@ int main() {
     char nomeProcurado[30];
     int n = 0;
 
-    printf("===================================!!!!!!Atenção!!!!!!===================================\n");
+    printf("\n===================================!!!!!!Atenção!!!!!!===================================\n");
     printf("   Os nomes para pessoas registradas nesta agenda estão restritos a caracteres comuns,\n");
     printf("sem qualquer caracter do tipo epecial, sejam eles acentuação ou letras especiais como 'ç'\n");
     printf("=========================================================================================\n\n");
