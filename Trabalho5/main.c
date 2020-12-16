@@ -251,32 +251,37 @@ char verificaPalvra (char nome[]) {
     return nome[30];
 }
 
-Contact *leArquivo(Contact *raiz, FILE *arquivo){
+/*Contact *leArquivo(Contact *raiz, FILE *arquivo){
     
-    Contact *aux = malloc(sizeof(Contact));
+    Contact *aux = (Contact* ) malloc(sizeof(Contact));
     while (fread(aux, sizeof(Contact), 1, arquivo) > 0) {
         aux->next = raiz->next;
         raiz->next = aux;
 
-        aux = malloc(sizeof(Contact));
+        aux = (Contact *)malloc(sizeof(Contact));
     }
-    return raiz;
+    return aux;
     //free(aux);
-}
+    /*novoContato->next = raiz->next;
+    raiz->next = novoContato;
+    */
+    //raiz->next = raiz;*/
 
-void *escreveArquivo(Contact *raiz, FILE *f){
-    Contact *aux = malloc(sizeof(Contact));
-    aux = NULL;
+/*void *escreveArquivo(Contact *raiz, FILE *f){
+    /*Contact *aux = malloc(sizeof(Contact));
+    aux = NULL;*/
+    /*Contact *aux = (Contact* ) malloc(sizeof(Contact));
+    aux = raiz;*/
 
-    if (raiz == NULL){
+    /*if (raiz->next == NULL){
         printf("Esta vazio");
     } else {
-        for (raiz = aux; raiz!=NULL; raiz = raiz->next){
-            fwrite(raiz,sizeof(Contact),1,f);
-        }
-    
-    }
-}
+        while (fwrite(aux, sizeof(Contact), 1, f) > 0) {
+            aux->next = raiz->next;
+            raiz->next = aux;
+
+            aux = (Contact *)malloc(sizeof(Contact));
+*/
 
 // Programa principal
 int main() {
@@ -295,19 +300,35 @@ int main() {
     printf("   Os nomes para pessoas registradas nesta agenda estão restritos a caracteres comuns,\n");
     printf("sem qualquer caracter do tipo epecial, sejam eles acentuação ou letras especiais como 'ç'\n");
     printf("=========================================================================================\n\n");
-
+    printf("estou aqui");//← aloca uma estrutura inexistente 
     Contact *raiz = (Contact*) malloc(sizeof (Contact));
     raiz->next = NULL;
+    Contact *aux = (Contact*) malloc(sizeof (Contact));
 
-    FILE *agenda = fopen("agenda.ab","a+b");
+
+    FILE *agenda = fopen("agenda.ab","r+b");
     if (agenda == NULL){
-        printf("Erro ao abrir o arquivo");
-        exit(1);
+        printf("Entrou noif\n");
+        printf("entrou no if");
+        agenda = fopen("agenda.ab","w+b");
     }
-    raiz = leArquivo(raiz,agenda);
+    
+    //↓ Problema aqui
+    else {
+        printf("entrou no else");
+        while (fread(aux, sizeof(Contact), 1, agenda) > 0) {
+            aux->next = raiz->next;
+            raiz->next = aux;
+
+            aux = (Contact *)malloc(sizeof(Contact));
+
+            
+        }
+        printf("\n SAIU no else");
+    }
     fclose(agenda);
 
-    printf("oi\n");
+    //printf("oi\n");
     
     while (op != EXIT) {       
         op = menu();
@@ -379,17 +400,27 @@ int main() {
         }
     }
 
-    char key;
+    char key[1];
     if (save == 1) {
         printf ("\nDeseja salvar alterações feitas? [y or n]: ");
         scanf("%s", key);
+        
         if (strcmp(key, "y") == 0) {
             agenda = fopen("agenda.ab","wb");
-            escreveArquivo(raiz,agenda);
+    
+            while (fwrite(aux, sizeof(Contact), 1, agenda) > 0) {
+                aux->next = raiz->next;
+                raiz->next = aux;
+
+                aux = (Contact *)malloc(sizeof(Contact));
+                
+            }
             fclose(agenda);
         }
     }
     
+    
     free(raiz);
+    free(aux);
     return 0;
 }
