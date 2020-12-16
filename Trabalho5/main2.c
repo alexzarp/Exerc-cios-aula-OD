@@ -272,7 +272,7 @@ int main() {
     printf("=========================================================================================\n\n");
     
     FILE *arq;
-    arq = fopen("agoraVai.ab","ab");
+    arq = fopen("agenda.txt","ab");
     
     Contact *raiz = (Contact*)malloc(sizeof (Contact));
     raiz->next = NULL;
@@ -378,7 +378,7 @@ int main() {
         if (strcmp(key, "y") == 0) {
             Contact *cabeca;
             cabeca = raiz->next;
-            arq = fopen("agoraVai.ab","w+b");
+            arq = fopen("agenda.txt","w+b");
             if (arq==NULL){
                 printf("Errooooo");
                 exit(1);    
