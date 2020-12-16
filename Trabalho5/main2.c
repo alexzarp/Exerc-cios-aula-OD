@@ -384,16 +384,16 @@ int main() {
                 exit(1);    
             }
 
-            for (raiz = cabeca; raiz!=NULL; raiz=raiz->next){
+            for (raiz = cabeca; raiz->next!=NULL; raiz=raiz->next){
                 fwrite(raiz,sizeof(Contact),1,arq);
             }
         }
     }
-
+    
     while (raiz != NULL) {
         free(raiz);
         raiz = raiz->next;
     }
-
+    fclose(arq);
     return 0;
 }
