@@ -64,7 +64,7 @@ void insContact (Contact *raiz, char *nome, char *email, char *telefone, int dia
     raiz->next = novoContato;
 }
 
-Contact *insereRaiz (Contact *raiz) {
+/*Contact *insereRaiz (Contact *raiz) {
     Contact *novoContato = NULL;
     novoContato = (Contact*) malloc (sizeof(Contact));
     novoContato->next = NULL;
@@ -78,6 +78,12 @@ Contact *insereRaiz (Contact *raiz) {
     novoContato->next = NULL;
     printf("entrou no insere");
     return ultimo;
+}*/
+
+void insereRaiz (Contact *raiz) {
+    Contact *novoContato = (Contact* ) malloc(sizeof (Contact));
+    novoContato->next = raiz->next;
+    raiz->next = novoContato;
 }
 
 //Permite conultar um contato
@@ -276,7 +282,16 @@ int main() {
     
     Contact *raiz = (Contact*)malloc(sizeof (Contact));
     raiz->next = NULL;
-    Contact *ultimo=NULL, *primeiro=NULL;
+
+    if (arq == NULL) {
+        printf("Não há um arquivo a ser carregado.");
+    } else {
+        while (fread(raiz, sizeof(Contact), 1, arq) > 0) {
+            insereRaiz(raiz);
+        }
+        fclose(arq);
+    }
+    /*Contact *ultimo=NULL, *primeiro=NULL;
     if (arq == NULL){
         printf("Deu erro ao abrir");
     }
@@ -299,9 +314,7 @@ int main() {
             primeiro = raiz->next;
         }
     }
-        
-    
-    fclose(arq);
+    fclose(arq);*/
 
     while (op != EXIT) {
         op = menu();
@@ -390,6 +403,8 @@ int main() {
             for (raiz = cabeca; raiz->next!=NULL; raiz=raiz->next){
                 fwrite(raiz,sizeof(Contact),1,arq);
             }
+            
+            fclose(arq);
         }
     }
     
@@ -397,6 +412,5 @@ int main() {
         free(raiz);
         raiz = raiz->next;
     }
-    fclose(arq);
     return 0;
 }
