@@ -80,10 +80,13 @@ void insContact (Contact *raiz, char *nome, char *email, char *telefone, int dia
     return ultimo;
 }*/
 
-void insereRaiz (Contact *raiz) {
+Contact *insereRaiz (Contact *raiz, Contact *aux) {
     Contact *novoContato = (Contact* ) malloc(sizeof (Contact));
+    novoContato = aux;
     novoContato->next = raiz->next;
     raiz->next = novoContato;
+
+    return novoContato;
 }
 
 //Permite conultar um contato
@@ -278,43 +281,31 @@ int main() {
     printf("=========================================================================================\n\n");
     
     FILE *arq;
-    arq = fopen("agenda.tb","rb");
+    arq = fopen("agenda.po","rb");
     
     Contact *raiz = (Contact*)malloc(sizeof (Contact));
     raiz->next = NULL;
 
     if (arq == NULL) {
         printf("Não há um arquivo a ser carregado.");
-    } else {
-        while (fread(raiz, sizeof(Contact), 1, arq) > 0) {
-            insereRaiz(raiz);
-        }
-        fclose(arq);
-    }
-    /*Contact *ultimo=NULL, *primeiro=NULL;
-    if (arq == NULL){
-        printf("Deu erro ao abrir");
-    }
-    else{
-        while (fread(raiz,sizeof(Contact),1,arq) > 0){
-            printf("\nentrou");
-            raiz->next = raiz->next;
-
-            if (primeiro==NULL){
-                primeiro = raiz;
-            }
-            if (ultimo==NULL){
-                ultimo = raiz;
-            }
-            else{
-                ultimo->next = raiz;
-                ultimo = raiz;
-            }
-            raiz = insereRaiz(raiz);
-            primeiro = raiz->next;
+    } 
+    else {
+        printf("Entrou no else");/*
+        while (fread(raiz, sizeof(Contact), 1, arq)) {
+            Contact *aux = malloc(sizeof(Contact));
+            raiz = insereRaiz(raiz, aux);            
+            
+        }*/
+        Contact *cabeca;
+        cabeca = raiz;
+        for (raiz = cabeca; raiz->next != NULL; raiz=raiz->next){
+            Contact *aux= malloc(sizeof(Contact));
+            fread(raiz,sizeof(Contact),1,arq);
+            raiz = insereRaiz(raiz, aux);
         }
     }
-    fclose(arq);*/
+    fclose(arq);
+    
 
     while (op != EXIT) {
         op = menu();
@@ -393,17 +384,19 @@ int main() {
         
         if (strcmp(key, "y") == 0) {
             Contact *cabeca;
-            cabeca = raiz->next;
-            arq = fopen("agenda.tb","wb");
+            cabeca = raiz;//->next;
+            arq = fopen("agenda.po","wb");
             if (arq==NULL){
                 printf("Errooooo");
                 exit(1);    
             }
-
-            for (raiz = cabeca; raiz->next!=NULL; raiz=raiz->next){
+            int cont = 0;
+            for (raiz = cabeca; raiz->next != NULL; raiz=raiz->next){
                 fwrite(raiz,sizeof(Contact),1,arq);
+                cont++;
+                printf("cont do for %d\n",cont);
             }
-            
+
             fclose(arq);
         }
     }
