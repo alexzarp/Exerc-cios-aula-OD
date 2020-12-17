@@ -76,7 +76,7 @@ Contact *insereRaiz (Contact *raiz) {
 
     ultimo->next = novoContato;
     novoContato->next = NULL;
-
+    printf("entrou no insere");
     return ultimo;
 }
 
@@ -272,7 +272,7 @@ int main() {
     printf("=========================================================================================\n\n");
     
     FILE *arq;
-    arq = fopen("agenda.txt","ab");
+    arq = fopen("agoraVai.ab","r+b");
     
     Contact *raiz = (Contact*)malloc(sizeof (Contact));
     raiz->next = NULL;
@@ -282,7 +282,7 @@ int main() {
     }
     else {
         while (fread(raiz,sizeof(Contact),1,arq) > 0){
-            raiz->next = NULL;
+            //raiz->next = NULL;
 
             if (primeiro==NULL){
                 primeiro = raiz;
@@ -295,6 +295,7 @@ int main() {
                 ultimo = raiz;
             }
             raiz = insereRaiz(raiz);
+            printf("entrou");
         }
         primeiro = raiz->next;
     }
@@ -378,7 +379,7 @@ int main() {
         if (strcmp(key, "y") == 0) {
             Contact *cabeca;
             cabeca = raiz->next;
-            arq = fopen("agenda.txt","w+b");
+            arq = fopen("agenda.tb","wb");
             if (arq==NULL){
                 printf("Errooooo");
                 exit(1);    
