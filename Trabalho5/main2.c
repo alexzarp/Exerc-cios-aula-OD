@@ -272,7 +272,7 @@ int main() {
     printf("=========================================================================================\n\n");
     
     FILE *arq;
-    arq = fopen("agoraVai.ab","r+b");
+    arq = fopen("agenda.tb","rb");
     
     Contact *raiz = (Contact*)malloc(sizeof (Contact));
     raiz->next = NULL;
@@ -280,9 +280,10 @@ int main() {
     if (arq == NULL){
         printf("Deu erro ao abrir");
     }
-    else {
+    else{
         while (fread(raiz,sizeof(Contact),1,arq) > 0){
-            //raiz->next = NULL;
+            printf("\nentrou");
+            raiz->next = raiz->next;
 
             if (primeiro==NULL){
                 primeiro = raiz;
@@ -295,10 +296,11 @@ int main() {
                 ultimo = raiz;
             }
             raiz = insereRaiz(raiz);
-            printf("entrou");
+            primeiro = raiz->next;
         }
-        primeiro = raiz->next;
     }
+        
+    
     fclose(arq);
 
     while (op != EXIT) {
