@@ -289,21 +289,22 @@ int main() {
     if (arq == NULL) {
         printf("Não há um arquivo a ser carregado.");
     } 
-    else {
+    //else {
+        //Esses foram os códigos que tentamos implementar porém não funcionaram
         printf("Entrou no else");/*
         while (fread(raiz, sizeof(Contact), 1, arq)) {
             Contact *aux = malloc(sizeof(Contact));
             raiz = insereRaiz(raiz, aux);            
             
         }*/
-        Contact *cabeca;
+        /*Contact *cabeca;
         cabeca = raiz;
         for (raiz = cabeca; raiz->next != NULL; raiz=raiz->next){
             Contact *aux= malloc(sizeof(Contact));
             fread(raiz,sizeof(Contact),1,arq);
-            raiz = insereRaiz(raiz, aux);
-        }
-    }
+            raiz = insereRaiz(raiz, aux);*/
+        //}
+    //}
     fclose(arq);
     
 
@@ -390,11 +391,9 @@ int main() {
                 printf("Errooooo");
                 exit(1);    
             }
-            int cont = 0;
+            
             for (raiz = cabeca; raiz->next != NULL; raiz=raiz->next){
                 fwrite(raiz,sizeof(Contact),1,arq);
-                cont++;
-                printf("cont do for %d\n",cont);
             }
 
             fclose(arq);
