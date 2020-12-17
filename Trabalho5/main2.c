@@ -64,22 +64,7 @@ void insContact (Contact *raiz, char *nome, char *email, char *telefone, int dia
     raiz->next = novoContato;
 }
 
-/*Contact *insereRaiz (Contact *raiz) {
-    Contact *novoContato = NULL;
-    novoContato = (Contact*) malloc (sizeof(Contact));
-    novoContato->next = NULL;
-
-    Contact *ultimo = raiz->next;
-    while (ultimo->next) {
-        ultimo = ultimo->next;
-    }
-
-    ultimo->next = novoContato;
-    novoContato->next = NULL;
-    printf("entrou no insere");
-    return ultimo;
-}*/
-
+//Função que em teoria carregaria os contatos do arquivo
 Contact *insereRaiz (Contact *raiz, Contact *aux) {
     Contact *novoContato = (Contact* ) malloc(sizeof (Contact));
     novoContato = aux;
@@ -114,11 +99,12 @@ int queryContact (Contact *raiz, char *nomeProcurado, int n) {
     }
 }
 
+char verificaPalvra (char nome[]);
 //Permite atualizar um contato
 void upContact (Contact *raiz, char *nomeProcurado) {
     raiz = raiz->next;//vai para o primeiro elemento
-    char chave[30];
-    char info[100];
+    char chave[1];
+    char info[30];
     int info_int, info_int1, info_int2;
 
     while (raiz != NULL) {
@@ -130,6 +116,7 @@ void upContact (Contact *raiz, char *nomeProcurado) {
                 printf("Digite o novo nome: ");
                 setbuf(stdin,NULL);
                 scanf("%[^\n]",info);
+                info[30] = verificaPalvra(info);
                 for (int i = 0; i < strlen(info); i++) {
                     info[i] = toupper(info[i]);
                 }
@@ -289,9 +276,10 @@ int main() {
     if (arq == NULL) {
         printf("Não há um arquivo a ser carregado.");
     } 
+    //fclose(arq);
     //else {
         //Esses foram os códigos que tentamos implementar porém não funcionaram
-        printf("Entrou no else");/*
+        /*
         while (fread(raiz, sizeof(Contact), 1, arq)) {
             Contact *aux = malloc(sizeof(Contact));
             raiz = insereRaiz(raiz, aux);            
@@ -305,7 +293,7 @@ int main() {
             raiz = insereRaiz(raiz, aux);*/
         //}
     //}
-    fclose(arq);
+    
     
 
     while (op != EXIT) {
@@ -405,5 +393,5 @@ int main() {
         raiz = raiz->next;
     }
     return 0;
-    //Alunos Bruna e alex
+    //Alunos Bruna e Alex
 }
